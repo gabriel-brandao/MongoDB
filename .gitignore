@@ -1,3 +1,4 @@
 #pasta que armazena os pacotes instalados pelo node
-node_modules/
-.env
+
+# node_modules/
+# .env
