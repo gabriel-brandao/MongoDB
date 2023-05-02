@@ -1,6 +1,5 @@
 const {response} = require("express");
-const {v4: uuid} = require("uuid")
-const Produto = require("../models/Categoria");
+const {v4: uuid} = require("uuid");
 const Categoria = require("../models/Categoria");
 
 //objeto que conteem todas as funções que são necessárias para se chamar na routes
@@ -34,16 +33,13 @@ module.exports = {
         if(!larguraMaxima)
             return response.status(400).json({error: "largura máxima não informada"});
         
-        if(!isHorizontal)
-            return response.status(400).json({error: "Orientação(vertical/horizontal) não informado"});
-
-        //instanciar um novo produto
+        //instanciar uma nova categoria
         const categoria = new Categoria ({
             _id: uuid(), 
             gondula,
             larguraMinima,
             larguraMaxima,
-            isHorizontal
+            isHorizontal: true,
         });
 
         try{
@@ -56,5 +52,41 @@ module.exports = {
             //caso der errado
             response.status(400).json({error: err.message});
          }
-    }
+    },
+
+    async atualiza(request, response) {
+        const {gondula, larguraMinima, larguraMaxima} = request.body;
+
+        if (gondula) response.categoria.gondula = gondula;
+        if (larguraMinima) response.categoria.larguraMinima = larguraMinima;
+        if (larguraMaxima) response.categoria.larguraMaxima = larguraMaxima;
+
+        try {
+            await response.categoria.save();
+            return response.status(200).json({ message: "Categoria atualizada com sucesso!" });
+        } catch (err) {
+            response.status(500).json({ error: err.message });
+        }
+    },
+
+    async atualizaSortimento(request, response) {
+        response.categoria.isHorizontal = !response.categoria.isHorizontal;
+
+        try {
+            await response.categoria.save();
+
+            return response.status(200).json({ message: `Sortimento alterado para ${response.categoria.isHorizontal ? "horizontal" : "vertical"} !` });
+        } catch (err) {
+            response.status(400).json({ error: err.message });
+        }
+    },
+
+    async exclui(request, response) {
+        try {
+            await response.categoria.deleteOne();
+            return response.status(200).json({ message: "Categoria excluída com sucesso!" });
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
+    },
 }

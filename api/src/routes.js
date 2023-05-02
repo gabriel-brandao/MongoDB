@@ -11,6 +11,7 @@ const CategoriaController = require("./controllers/CategoriaController");
 const UsuarioController = require("./controllers/UsuarioController");
 const GondulaController = require("./controllers/GondulaController");
 const PlanogramaController = require("./controllers/PlanogramaController");
+const CategoriaMiddleware = require("./middlewares/CategoriaMiddleware");
 
 
 /*
@@ -41,6 +42,9 @@ routes.post("/produtos", ProdutoController.cadastra);//apesar de serem URL ident
 // para categorias
 routes.get("/categorias", CategoriaController.index);
 routes.post("/categorias", CategoriaController.cadastra);
+routes.put("/categorias/:id", CategoriaMiddleware.validarId, CategoriaController.atualiza);
+routes.patch("/categorias/:id", CategoriaMiddleware.validarId, CategoriaController.atualizaSortimento);
+routes.delete("/categorias/:id", CategoriaMiddleware.validarId, CategoriaController.exclui);
 
 // para usuarios
 routes.get("/usuarios", UsuarioController.index);
