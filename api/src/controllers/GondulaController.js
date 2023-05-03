@@ -49,5 +49,28 @@ module.exports = {
             //caso der errado
             response.status(400).json({error: err.message});
          }
-    }
+    },
+
+    async atualiza(request, response) {
+        const {largura, quantidadeDeNiveis} = request.body;
+
+        if (largura) response.gondula.largura = largura;
+        if (quantidadeDeNiveis) response.gondula.quantidadeDeNiveis = quantidadeDeNiveis;
+
+        try {
+            await response.gondula.save();
+            return response.status(200).json({ message: "Gondula atualizada com sucesso!" });
+        } catch (err) {
+            response.status(500).json({ error: err.message });
+        }
+    },
+
+    async exclui(request, response) {
+        try {
+            await response.gondula.deleteOne();
+            return response.status(200).json({ message: "Gondula excluída com sucesso!" });
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
+    },
 }

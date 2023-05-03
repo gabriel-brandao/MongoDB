@@ -40,5 +40,14 @@ module.exports = {
             //caso der errado
             response.status(400).json({ error: err.message });
         }
-    }
+    },
+
+    async exclui(request, response) {
+        try {
+            await response.planograma.deleteOne();
+            return response.status(200).json({ message: "Planograma excluído com sucesso!" });
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
+    },
 }

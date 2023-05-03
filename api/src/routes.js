@@ -7,11 +7,15 @@ const express = require("express");
 const routes = express.Router();
 
 const ProdutoController = require("./controllers/ProdutoController");
+const ProdutoMiddleware = require("./middlewares/ProdutoMiddleware");
 const CategoriaController = require("./controllers/CategoriaController");
-const UsuarioController = require("./controllers/UsuarioController");
-const GondulaController = require("./controllers/GondulaController");
-const PlanogramaController = require("./controllers/PlanogramaController");
 const CategoriaMiddleware = require("./middlewares/CategoriaMiddleware");
+const UsuarioController = require("./controllers/UsuarioController");
+const UsuarioMiddleware = require("./middlewares/UsuarioMiddleware");
+const GondulaController = require("./controllers/GondulaController");
+const GondulaMiddleware = require("./middlewares/GondulaMiddleware");
+const PlanogramaController = require("./controllers/PlanogramaController");
+const PlanogramaMiddleware = require("./middlewares/PlanogramaMiddleware");
 
 
 /*
@@ -36,8 +40,8 @@ routes.get("/", (request, response)=>{
 //passa a arrow function importada
 routes.get("/produtos", ProdutoController.index);
 routes.post("/produtos", ProdutoController.cadastra);//apesar de serem URL identicas a função será diferente
-
-
+routes.put("/produtos/:id", ProdutoMiddleware.validarId, ProdutoController.atualiza);
+routes.delete("/produtos/:id", ProdutoMiddleware.validarId, ProdutoController.exclui);
 
 // para categorias
 routes.get("/categorias", CategoriaController.index);
@@ -49,14 +53,19 @@ routes.delete("/categorias/:id", CategoriaMiddleware.validarId, CategoriaControl
 // para usuarios
 routes.get("/usuarios", UsuarioController.index);
 routes.post("/usuarios", UsuarioController.cadastra);
+routes.put("/usuarios/:id", UsuarioMiddleware.validarId, UsuarioController.atualiza);
+routes.delete("/usuarios/:id", UsuarioMiddleware.validarId, UsuarioController.exclui);
 
 // para gondula
 routes.get("/gondula", GondulaController.index);
 routes.post("/gondula", GondulaController.cadastra);
+routes.put("/gondula/:id", GondulaMiddleware.validarId, GondulaController.atualiza);
+routes.delete("/gondula/:id", GondulaMiddleware.validarId, GondulaController.exclui);
 
 // para planograma
 routes.get("/planograma", PlanogramaController.index);
 routes.post("/planograma", PlanogramaController.cadastra);
+routes.delete("/planograma/:id", PlanogramaMiddleware.validarId, PlanogramaController.exclui);
 
 
 //exporta a função para o server

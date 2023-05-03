@@ -1,4 +1,5 @@
 const {response} = require("express");
+const {v4: uuid} = require("uuid");
 const Usuario = require("../models/Usuario");
 
 module.exports = {
@@ -20,14 +21,14 @@ module.exports = {
 
         if(!cpf)
             return response.status(400).json({error: "informe o cpf"});
-         // providenciar método para validar cpf
+         // providenciar método para criptografar cpf
 
         if(!nome)
             return response.status(400).json({error: "informe o nome"});
 
         if(!senha)
             return response.status(400).json({error: "informe uma senha"});
-         // providenciar método para validação de senha
+         // providenciar método para criptografar senha
 
         if(!privilegio)
             return response.status(400).json({error: "Informe o cargo"});
@@ -35,6 +36,7 @@ module.exports = {
 
         //instanciar um novo usuario
         const usuario = new Usuario ({
+            _id: uuid(),
             cpf, 
             nome,
             senha,
@@ -51,5 +53,30 @@ module.exports = {
             //caso der errado
             response.status(400).json({error: err.message});
          }
-    }
+    },
+
+    async atualiza(request, response) {
+        const {cpf, nome, senha, privilegio} = request.body;
+
+        if (cpf) response.usuario.cpf = cpf;
+        if (nome) response.usuario.nome = nome;
+        if (senha) response.usuario.senha = senha;
+        if (privilegio) response.usuario.privilegio = privilegio;
+
+        try {
+            await response.usuario.save();
+            return response.status(200).json({ message: "Usuário atualizado com sucesso!" });
+        } catch (err) {
+            response.status(500).json({ error: err.message });
+        }
+    },
+
+    async exclui(request, response) {
+        try {
+            await response.usuario.deleteOne();
+            return response.status(200).json({ message: "Usuário excluída com sucesso!" });
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
+    },
 }

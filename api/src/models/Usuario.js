@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const usuarioSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        required: true,
+    },
     cpf: {
         type: String,
         required: true,

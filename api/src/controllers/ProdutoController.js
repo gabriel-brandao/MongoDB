@@ -68,5 +68,32 @@ module.exports = {
             //caso der errado
             response.status(400).json({error: err.message});
          }
-    }
+    },
+
+    async atualiza(request, response) {
+        const {descricao, altura, largura, valorDeUtilidade, numeroMinimoDeProdutos, numeroMaximoDeProdutos} = request.body;
+
+        if (descricao) response.produto.descricao = descricao;
+        if (altura) response.produto.altura = altura;
+        if (largura) response.produto.largura = largura;
+        if (valorDeUtilidade) response.produto.valorDeUtilidade = valorDeUtilidade;
+        if (numeroMinimoDeProdutos) response.produto.numeroMinimoDeProdutos = numeroMinimoDeProdutos;
+        if (numeroMaximoDeProdutos) response.produto.numeroMaximoDeProdutos = numeroMaximoDeProdutos;
+
+        try {
+            await response.produto.save();
+            return response.status(200).json({ message: "Produto atualizado com sucesso!" });
+        } catch (err) {
+            response.status(500).json({ error: err.message });
+        }
+    },
+
+    async exclui(request, response) {
+        try {
+            await response.produto.deleteOne();
+            return response.status(200).json({ message: "Produto excluído com sucesso!" });
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
+    },
 }
