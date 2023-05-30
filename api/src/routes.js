@@ -2,6 +2,7 @@
 
 //importação da biblioteca
 const express = require("express");
+const path = require("path"); //para caminho do diretório
 
 //importar o responsavel por organizar as rotas
 const routes = express.Router();
@@ -34,7 +35,9 @@ DELETE: Deleta uma informação
 //rota home (raiz), função que será executada assim que o / for acessado (request: o que a rota esta enviando para o Back, response: o que o Back enviará para a rota apos a manipulação)
 routes.get("/", (request, response)=>{
     //envia para a aplicação
-    response.send("Hello World");
+    console.log(__dirname);
+    //path.join caminho do e nome do diretorio
+    response.sendFile(path.join(__dirname + "/index.html")); 
 });
 
 //passa a arrow function importada
