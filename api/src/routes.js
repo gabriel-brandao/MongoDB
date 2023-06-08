@@ -7,6 +7,9 @@ const path = require("path"); //para caminho do diretório
 //importar o responsavel por organizar as rotas
 const routes = express.Router();
 
+//para receber dados do formulario html no request.body
+routes.use(express.urlencoded());
+
 const ProdutoController = require("./controllers/ProdutoController");
 const ProdutoMiddleware = require("./middlewares/ProdutoMiddleware");
 const CategoriaController = require("./controllers/CategoriaController");
@@ -34,10 +37,13 @@ DELETE: Deleta uma informação
 
 //rota home (raiz), função que será executada assim que o / for acessado (request: o que a rota esta enviando para o Back, response: o que o Back enviará para a rota apos a manipulação)
 routes.get("/", (request, response)=>{
-    //envia para a aplicação
-    console.log(__dirname);
     //path.join caminho do e nome do diretorio
-    response.sendFile(path.join(__dirname + "/index.html")); 
+    response.sendFile(path.join(__dirname + "/views/index.html")); 
+});
+
+routes.post("/", UsuarioMiddleware.validaLogin, async (request, response)=>{
+    caminho = await UsuarioMiddleware.redireciona(request, response);
+    response.sendFile(path.join(__dirname + caminho));
 });
 
 //passa a arrow function importada
