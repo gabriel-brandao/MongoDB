@@ -41,6 +41,7 @@ routes.get("/", (request, response)=>{
     response.sendFile(path.join(__dirname + "/views/index.html")); 
 });
 
+
 routes.post("/", UsuarioMiddleware.validaLogin, async (request, response)=>{
     caminho = await UsuarioMiddleware.redireciona(request, response);
     response.sendFile(path.join(__dirname + caminho));
