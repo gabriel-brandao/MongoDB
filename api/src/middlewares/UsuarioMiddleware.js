@@ -29,10 +29,10 @@ module.exports = {
             const usuario = await Usuario.findOne({cpf: inputUsername});
             response.usuario = usuario;
             if (!usuario) {
-                return response.status(404).json({ erro: "Usuário não encontrado." });
+                return response.status(404).json({ erro: "Usuário ou senha inválido." });
             }
             if (usuario.senha != inputPassword) {
-                return response.status(500).json({ erro: "Senha incorreta." });
+                return response.status(500).json({ erro: "Usuário ou senha inválido." });
             }
         } catch (err) {
             return response.status(500).json({ error: err.message });

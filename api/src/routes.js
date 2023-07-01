@@ -4,6 +4,8 @@
 const express = require("express");
 const path = require("path"); //para caminho do diretório
 
+const axios = require("axios");
+
 //importar o responsavel por organizar as rotas
 const routes = express.Router();
 
@@ -22,6 +24,7 @@ const PlanogramaController = require("./controllers/PlanogramaController");
 const PlanogramaMiddleware = require("./middlewares/PlanogramaMiddleware");
 
 
+
 /*
 Rotas são os parametros da URL, tudo que queremos acessar é baseado em rotas 
 há varias maneiras de se fazer essa requisição
@@ -36,13 +39,13 @@ DELETE: Deleta uma informação
 */
 
 //rota home (raiz), função que será executada assim que o / for acessado (request: o que a rota esta enviando para o Back, response: o que o Back enviará para a rota apos a manipulação)
-routes.get("/", (request, response)=>{
+routes.get("/", (request, response) => {
     //path.join caminho do e nome do diretorio
-    response.sendFile(path.join(__dirname + "/views/index.html")); 
+    response.sendFile(path.join(__dirname + "/views/index.html"));
 });
 
 
-routes.post("/", UsuarioMiddleware.validaLogin, async (request, response)=>{
+routes.post("/", UsuarioMiddleware.validaLogin, async (request, response) => {
     caminho = await UsuarioMiddleware.redireciona(request, response);
     response.sendFile(path.join(__dirname + caminho));
 });
@@ -77,6 +80,10 @@ routes.get("/planograma", PlanogramaController.index);
 routes.post("/planograma", PlanogramaController.cadastra);
 routes.delete("/planograma/:id", PlanogramaMiddleware.validarId, PlanogramaController.exclui);
 
+routes.post("/shell", () => {
+    const sh = require("shelljs");
+    sh.echo("SUCESSO!!! (mensagem no console do backend/terminal)");
+});
 
 //exporta a função para o server
 module.exports = routes;

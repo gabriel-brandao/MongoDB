@@ -22,6 +22,8 @@ connectToDatabase();
 const app = express();
 const port = 3333;
 
+app.use(express.static(__dirname + '/views'));
+
 //o express passa a entender JSON, e peço para usar as rotas
 app.use(express.json());
 app.use(routes);
