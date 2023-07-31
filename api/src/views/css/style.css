@@ -1,3 +1,16 @@
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /*height: 2.5rem;             altura do rodapé */
+  }
+
+
+/*background da do header*/
+.cabecalho{
+    background-color: rgb(152, 152, 152);
+}
+
 /*background da body*/
 .corpo{
     /*background-image: url(/assets/background-prateleira.png);*/
@@ -6,6 +19,8 @@
     background-repeat: no-repeat;
     background-position: 0% -4%;
     background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
 /*altera cor padrão do menu de hamburgue*/
@@ -17,3 +32,32 @@
 .navbar-dark .navbar-toggler {
     border-color: rgba(255, 217, 0, 1);
 }
+
+.mid-center {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.btn-default{
+    background-color: black;
+    font-weight: 600;
+    color:white;
+    box-shadow: 5px 4px 1px -1px rgba(255, 217, 0, 1);
+    transition-duration: 0.4s;
+    border-radius: 7px;
+
+    display: block;
+    margin-bottom: 6.25rem;
+    
+
+
+}
+
+.btn-default:hover {
+    background-color: rgba(255, 217, 0, 1); 
+    font-weight: 600;
+    color: black;
+    box-shadow: none;
+    border: 2px solid #000;
+  }
