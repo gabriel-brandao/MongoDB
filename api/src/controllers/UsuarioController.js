@@ -1,6 +1,7 @@
 const {response} = require("express");
 const {v4: uuid} = require("uuid");
 const Usuario = require("../models/Usuario");
+const bcrypt = require("bcrypt");
 
 module.exports = {
    async index(request, response){
@@ -17,7 +18,7 @@ module.exports = {
     //rota de criação
     async cadastra (request, response){
         //corpo da requisição (info obrigatórias)
-        const {cpf, nome, senha, privilegio} = request.body;
+        let {cpf, nome, senha, privilegio} = request.body;
 
         if(!cpf)
             return response.status(400).json({error: "informe o cpf"});
@@ -32,7 +33,8 @@ module.exports = {
 
         if(!privilegio)
             return response.status(400).json({error: "Informe o cargo"});
-        
+
+        senha = bcrypt.hashSync(senha, 10);
 
         //instanciar um novo usuario
         const usuario = new Usuario ({
@@ -56,11 +58,14 @@ module.exports = {
     },
 
     async atualiza(request, response) {
-        const {cpf, nome, senha, privilegio} = request.body;
+        let {cpf, nome, senha, privilegio} = request.body;
 
         if (cpf) response.usuario.cpf = cpf;
         if (nome) response.usuario.nome = nome;
-        if (senha) response.usuario.senha = senha;
+        if (senha) {
+            senha = bcrypt.hashSync(senha, 10);
+            response.usuario.senha = senha;
+        } 
         if (privilegio) response.usuario.privilegio = privilegio;
 
         try {

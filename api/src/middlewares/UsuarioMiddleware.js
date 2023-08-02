@@ -1,6 +1,7 @@
 const { validate: isUuid } = require("uuid");
 const Usuario = require("../models/Usuario");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 module.exports = {
     async validarId(request, response, next) {
@@ -31,9 +32,11 @@ module.exports = {
             if (!usuario) {
                 return response.status(404).json({ erro: "Usuário ou senha inválido." });
             }
-            if (usuario.senha != inputPassword) {
+            const comparar = await bcrypt.compare(inputPassword, usuario.senha);
+            if (!comparar) {
                 return response.status(500).json({ erro: "Usuário ou senha inválido." });
             }
+            
         } catch (err) {
             return response.status(500).json({ error: err.message });
         }
@@ -49,7 +52,7 @@ module.exports = {
             response.usuario = usuario;
             switch (usuario.privilegio) {
                 case "admin":
-                    caminho = "/views/admin.html";
+                    caminho = "/views/systemAdmin.html";
                     break;
                 case "compras":
                     caminho = "/views/compras.html";
