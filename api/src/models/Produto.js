@@ -11,7 +11,7 @@ const produtoSchema = new mongoose.Schema({
         type: String,
         required: true,// (obrigatório) - ID será uma abstração (responsabilidade) do back-end
     },
-    categoria: {
+    nome: {
         type: String,
         required: true
     },
@@ -27,15 +27,15 @@ const produtoSchema = new mongoose.Schema({
         type: Number, //double
         required: true
     },
-    valorDeUtilidade: {
+    valorUtilidade: {
         type: Number, //double
         required: true
     }, 
-    numeroMinimoDeProdutos: {
+    minimoProdutos: {
         type: Number, //int
         required: true
     },
-    numeroMaximoDeProdutos: {
+    maximoProdutos: {
         type: Number, //int
         required: true
     }

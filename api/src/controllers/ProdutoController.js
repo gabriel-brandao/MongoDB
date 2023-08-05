@@ -22,40 +22,40 @@ module.exports = {
     //rota de criação
     async cadastra (request, response){
         //corpo da requisição (info obrigatórias)
-        const {categoria, descricao, altura, largura, valorDeUtilidade, numeroMinimoDeProdutos, numeroMaximoDeProdutos} = request.body;
+        const {nome, descricao, altura, largura, valorUtilidade, minimoProdutos, maximoProdutos} = request.body;
 
-        if(!categoria)
-            return response.status(400).json({error: "categoria não informada"});
+        if(!nome)
+            return response.status(400).json({error: "Informe o nome do produto"});
         
         if(!descricao)
-            return response.status(400).json({error: "descrição não informada"});
+            return response.status(400).json({error: "Informe uma descrição para o produto"});
         
         if(!altura)
-            return response.status(400).json({error: "altura não informada"});
+            return response.status(400).json({error: "Informe a altura do produto"});
         
         if(!largura)
-            return response.status(400).json({error: "largura não informada"});
+            return response.status(400).json({error: "Informe a largura do produto"});
         
-        if(!valorDeUtilidade)
+        if(!valorUtilidade)
             return response.status(400).json({error: "valor de utilidade não informado"});
         
-        if(!numeroMinimoDeProdutos)
-            return response.status(400).json({error: "numero mínimo de produtos não informado"});
+        if(!minimoProdutos)
+            return response.status(400).json({error: "Informe o numero mínimo de frentes para o produto informado"});
         
-        if(!numeroMaximoDeProdutos)
+        if(!maximoProdutos)
             return response.status(400).json({error: "numero máximo de produtos não informado"});
         
 
         //instanciar um novo produto
         const produto = new Produto ({
             _id: uuid(), 
-            categoria,
+            nome,
             descricao,
             altura,
             largura,
-            valorDeUtilidade,
-            numeroMinimoDeProdutos,
-            numeroMaximoDeProdutos
+            valorUtilidade,
+            minimoProdutos,
+            maximoProdutos
         });
 
         try{
