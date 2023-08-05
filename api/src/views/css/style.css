@@ -1,10 +1,9 @@
-#footer {
+/*#footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    /*height: 2.5rem;             altura do rodapé */
-  }
-
+  
+  }*/
 
 /*background da do header*/
 .cabecalho{
@@ -23,6 +22,15 @@
     width: 100vw;
 }
 
+/* Adiciona um padding ao body quando o menu é aberto, Ajuste a altura de acordo com a altura do menu  */
+.navbar {
+    z-index: 1;
+    position: relative;
+}
+.menu-aberto {
+    padding-top: 80px;
+}
+
 /*altera cor padrão do menu de hamburgue*/
 .navbar-dark .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,217,0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
@@ -36,6 +44,10 @@
 .navbar-nav {
     align-items: flex-end;
     font-weight: bold;
+}
+
+.nav-link-black{
+    color: black;
 }
 
 .mid-center {
@@ -66,3 +78,7 @@
     box-shadow: none;
     border: 2px solid #000;
   }
+
+.input-valor{
+    width: 80px;
+}
