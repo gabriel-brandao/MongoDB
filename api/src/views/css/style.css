@@ -21,7 +21,10 @@
     height: 100vh;
     width: 100vw;
 }
-
+#content-main{
+    min-height: 100%;
+    position: relative;
+}
 /* Adiciona um padding ao body quando o menu é aberto, Ajuste a altura de acordo com a altura do menu  */
 .navbar {
     z-index: 1;
@@ -56,6 +59,7 @@
     transform: translateX(-50%) translateY(-50%);
 }
 
+/*botão padrao*/
 .btn-default{
     background-color: black;
     font-weight: 600;
@@ -66,9 +70,6 @@
 
     display: block;
     margin-bottom: 6.25rem;
-    
-
-
 }
 
 .btn-default:hover {
@@ -77,7 +78,51 @@
     color: black;
     box-shadow: none;
     border: 2px solid #000;
-  }
+}
+
+
+/*botão de atualizar produto*/
+.btn-atualizar{
+    background-color: black;
+    font-weight: 600;
+    color:rgb(7, 255, 61);
+    box-shadow: 5px 4px 1px -1px rgb(7, 255, 61);
+    transition-duration: 0.4s;
+    border-radius: 7px;
+
+    display: block;
+    margin-bottom: 6.25rem;
+}
+
+.btn-atualizar:hover {
+    background-color: rgb(7, 255, 61);
+    font-weight: 600;
+    color: black;
+    box-shadow: none;
+    border: 2px solid #000;
+}
+
+/*botão de remover produto*/
+.btn-remover{
+    background-color: black;
+    font-weight: 600;
+    color:rgb(238, 35, 35);
+    box-shadow: 5px 4px 1px -1px rgb(238, 35, 35);
+    transition-duration: 0.4s;
+    border-radius: 7px;
+
+    display: block;
+    margin-bottom: 6.25rem;
+}
+
+.btn-remover:hover {
+    background-color: rgb(238, 35, 35);
+    font-weight: 600;
+    color: black;
+    box-shadow: none;
+    border: 2px solid #000;
+}
+
 
 .input-valor{
     width: 80px;
