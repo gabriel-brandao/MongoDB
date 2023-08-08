@@ -53,6 +53,7 @@ routes.post("/", UsuarioMiddleware.validaLogin, async (request, response) => {
 //passa a arrow function importada
 routes.get("/produtos", ProdutoController.index);
 routes.post("/produtos", ProdutoController.cadastra);//apesar de serem URL identicas a função será diferente
+routes.get("/produto/:id", ProdutoMiddleware.obterProduto);
 routes.put("/produtos/:id", ProdutoMiddleware.validarId, ProdutoController.atualiza);
 routes.delete("/produtos/:id", ProdutoMiddleware.validarId, ProdutoController.exclui);
 

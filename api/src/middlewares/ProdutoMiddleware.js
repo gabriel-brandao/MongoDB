@@ -20,5 +20,24 @@ module.exports = {
         }
 
         next();
+    },
+
+    async obterProduto(request, response) {
+        const { id } = request.params;
+
+        if (!isUuid(id)) {
+            return response.status(400).json({ error: "ID inválido!" });
+        }
+
+        try {
+            const produto = await Produto.findById(id);
+            if (!produto) {
+                return response.status(404).json({ error: "Produto não encontrado." });
+            } else {
+                return response.status(200).json({ produto: produto });
+            }
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
     }
 }
