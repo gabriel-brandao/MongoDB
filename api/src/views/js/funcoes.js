@@ -78,6 +78,7 @@ async function atualizaProduto() {
     let produtoOption = produtoSelect.options[produtoSelect.selectedIndex].value;
     if (!produtoOption) {
         document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #ff0'>Selecione um Produto para Alterar!</p>";
+        scrollTo(0, 0);
         return;
     }
 
@@ -97,13 +98,13 @@ async function atualizaProduto() {
 }
 
 async function removeProduto() {
+    let produtoOption = produtoSelect.options[produtoSelect.selectedIndex].value;
+    if (!produtoOption) {
+        document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #ff0'>Selecione um Produto se quiser Remover!</p>";
+        scrollTo(0, 0);
+        return;
+    }
     if(confirm("Você deseja realmente excluir este produto?")) {
-        let produtoOption = produtoSelect.options[produtoSelect.selectedIndex].value;
-        if (!produtoOption) {
-            document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #ff0'>Selecione um Produto se quiser Remover!</p>";
-            return;
-        }
-        
         const remover = await axios.delete("/produtos/" + produtoOption);
         alert(remover.data.message);
         location.reload();
