@@ -127,3 +127,8 @@
 .input-valor{
     width: 80px;
 }
+
+.form-check-input:checked {
+    background-color: #000;
+    border-color: #ffc107;
+}
