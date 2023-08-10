@@ -9,10 +9,13 @@ module.exports = {
    async index(request, response){
         try{
             //(await) - aguarda a resposta
-            const categorias = await Categoria.find();
-
-            //retorna para o cliente a requisição feita
-            return response.status(200).json({categorias});
+            const categorias = await Categoria.find().sort({ nome: 1 });
+            const categoriasCount = await Categoria.find().count();
+            if (categoriasCount)
+                //retorna para o cliente a requisição feita
+                return response.status(200).json({ found: true, categorias });
+            else
+                return response.json({ found: false, msg: "<p style='color: #f00'>Não foi encontrada nenhuma categoria</p>" })
         } 
          catch(err) {
             response.status(500).json({error: err.message});
@@ -22,10 +25,13 @@ module.exports = {
     //rota de criação
     async cadastra (request, response){
         //corpo da requisição (info obrigatórias)
-        const {gondula, larguraMinima, larguraMaxima, isHorizontal} = request.body;
+        const {nome, tipo, larguraMinima, larguraMaxima, orientacao} = request.body;
 
-        if(!gondula)
-            return response.status(400).json({error: "gondula não informada"});
+        if(!nome)
+            return response.status(400).json({error: "nome não informado"});
+        
+        if(!tipo)
+            return response.status(400).json({error: "tipo de categoria não informado"});
         
         if(!larguraMinima)
             return response.status(400).json({error: "largura mínima não informada"});
@@ -36,10 +42,11 @@ module.exports = {
         //instanciar uma nova categoria
         const categoria = new Categoria ({
             _id: uuid(), 
-            gondula,
+            nome,
+            tipo,
             larguraMinima,
             larguraMaxima,
-            isHorizontal: true,
+            orientacao,
         });
 
         try{
@@ -55,29 +62,19 @@ module.exports = {
     },
 
     async atualiza(request, response) {
-        const {gondula, larguraMinima, larguraMaxima} = request.body;
+        const {nome, tipo, larguraMinima, larguraMaxima, orientacao} = request.body;
 
-        if (gondula) response.categoria.gondula = gondula;
-        if (larguraMinima) response.categoria.larguraMinima = larguraMinima;
-        if (larguraMaxima) response.categoria.larguraMaxima = larguraMaxima;
+        response.categoria.nome = nome;
+        response.categoria.tipo = tipo;
+        response.categoria.larguraMinima = larguraMinima;
+        response.categoria.larguraMaxima = larguraMaxima;
+        response.categoria.orientacao = orientacao;
 
         try {
             await response.categoria.save();
             return response.status(200).json({ message: "Categoria atualizada com sucesso!" });
         } catch (err) {
             response.status(500).json({ error: err.message });
-        }
-    },
-
-    async atualizaSortimento(request, response) {
-        response.categoria.isHorizontal = !response.categoria.isHorizontal;
-
-        try {
-            await response.categoria.save();
-
-            return response.status(200).json({ message: `Sortimento alterado para ${response.categoria.isHorizontal ? "horizontal" : "vertical"} !` });
-        } catch (err) {
-            response.status(400).json({ error: err.message });
         }
     },
 

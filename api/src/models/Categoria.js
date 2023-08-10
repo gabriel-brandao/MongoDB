@@ -5,9 +5,17 @@ const categoriaSchema = new mongoose.Schema({
         type: String,
         required: true,//obrigatório
     },
-    gondula: {
-        type: String, //int
+    nome: {
+        type: String, 
         required: true
+    },
+    tipo: {
+        type: String, 
+        required: true
+    },
+    produtos: {
+        type: Array, // id
+        default: []
     },
     larguraMinima: {
         type: Number, //double
@@ -17,9 +25,9 @@ const categoriaSchema = new mongoose.Schema({
         type: Number, //double
         required: true
     },
-    isHorizontal: {
-        type: Boolean, //vertical(padrão)
-        default: false
+    orientacao: {
+        type: String,
+        required: true
     }
 });
 
