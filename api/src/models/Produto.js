@@ -19,6 +19,10 @@ const produtoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    categoria:{
+        type: Object,
+        required: true
+    },
     altura: {
         type: Number, //double
         required: true

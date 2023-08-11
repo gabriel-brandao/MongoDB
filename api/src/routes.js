@@ -62,6 +62,7 @@ routes.get("/categorias", CategoriaController.index);
 routes.post("/categorias", CategoriaController.cadastra);
 routes.get("/categoria/:id", CategoriaMiddleware.obterCategoria);
 routes.put("/categorias/:id", CategoriaMiddleware.validarId, CategoriaController.atualiza);
+routes.patch("/categorias/:id", CategoriaMiddleware.validarId, CategoriaController.atualizaProdutos);
 routes.delete("/categorias/:id", CategoriaMiddleware.validarId, CategoriaController.exclui);
 
 // para usuarios

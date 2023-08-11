@@ -78,6 +78,23 @@ module.exports = {
         }
     },
 
+    async atualizaProdutos(request, response) {
+        const { produtoId, operacao } = request.body;
+        if (operacao == "cadastro") {
+            response.categoria.produtos.push(produtoId);
+        } else if (operacao == "remove") {
+            var pos = response.categoria.produtos.indexOf(produtoId);
+            response.categoria.produtos.splice(pos, 1);
+        }
+
+        try {
+            await response.categoria.save();
+            return response.status(200).json({ message: "Produtos atualizados com sucesso!" });
+        } catch (err) {
+            response.status(400).json({ error: err.message });
+        }
+    },
+
     async exclui(request, response) {
         try {
             await response.categoria.deleteOne();

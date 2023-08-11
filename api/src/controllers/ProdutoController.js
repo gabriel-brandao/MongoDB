@@ -25,13 +25,16 @@ module.exports = {
     //rota de criação
     async cadastra(request, response) {
         //corpo da requisição (info obrigatórias)
-        const { nome, descricao, altura, largura, valorUtilidade, minimoProdutos, maximoProdutos } = request.body;
+        const { nome, descricao, categoria, altura, largura, valorUtilidade, minimoProdutos, maximoProdutos } = request.body;
 
         if (!nome)
             return response.status(400).json({ error: "Informe o nome do produto" });
 
         if (!descricao)
             return response.status(400).json({ error: "Informe uma descrição para o produto" });
+
+        if (!categoria)
+            return response.status(400).json({ error: "Selecione uma categoria para o produto" });
 
         if (!altura)
             return response.status(400).json({ error: "Informe a altura do produto" });
@@ -48,12 +51,13 @@ module.exports = {
         if (!maximoProdutos)
             return response.status(400).json({ error: "numero máximo de produtos não informado" });
 
-
+        const id = uuid();
         //instanciar um novo produto
         const produto = new Produto({
-            _id: uuid(),
+            _id: id,
             nome,
             descricao,
+            categoria,
             altura,
             largura,
             valorUtilidade,
@@ -65,7 +69,7 @@ module.exports = {
             //tenta salvar no BD
             await produto.save();
 
-            return response.status(201).json({ message: "Produto cadastrado com Sucesso !!" });
+            return response.status(201).json({ message: "Produto cadastrado com Sucesso !!", id });
         }
         catch (err) {
             //caso der errado
@@ -74,10 +78,11 @@ module.exports = {
     },
 
     async atualiza(request, response) {
-        const { nome, descricao, altura, largura, valorUtilidade, minimoProdutos, maximoProdutos } = request.body;
+        const { nome, descricao, categoria, altura, largura, valorUtilidade, minimoProdutos, maximoProdutos } = request.body;
 
         response.produto.nome = nome;
         response.produto.descricao = descricao;
+        response.produto.categoria = categoria;
         response.produto.altura = altura;
         response.produto.largura = largura;
         response.produto.valorUtilidade = valorUtilidade;
