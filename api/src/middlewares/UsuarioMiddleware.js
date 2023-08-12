@@ -22,51 +22,28 @@ module.exports = {
         }
 
         next();
-    }, 
-
-    async validaLogin(request, response, next) {
-        const {inputUsername, inputPassword} = request.body;
-        try {
-            const usuario = await Usuario.findOne({cpf: inputUsername});
-            response.usuario = usuario;
-            if (!usuario) {
-                return response.status(404).json({ erro: "Usuário ou senha inválido." });
-            }
-            const comparar = await bcrypt.compare(inputPassword, usuario.senha);
-            if (!comparar) {
-                return response.status(500).json({ erro: "Usuário ou senha inválido." });
-            }
-            
-        } catch (err) {
-            return response.status(500).json({ error: err.message });
-        }
-
-        next();
     },
 
-    async redireciona(request, response) {
-        const inputUsername = request.body.inputUsername;
-        let caminho;
+    async validaLogin(request, response, next) {
+        const { inputUsername, inputPassword } = request.body;
         try {
-            const usuario = await Usuario.findOne({cpf: inputUsername});
-            response.usuario = usuario;
-            switch (usuario.privilegio) {
-                case "admin":
-                    caminho = "/views/systemAdmin.html";
-                    break;
-                case "compras":
-                    caminho = "/views/compras.html";
-                    break;
-                case "gestor":
-                    caminho = "/views/gestor.html";
-                    break;
-                case "repositor":
-                    caminho = "/views/repositor.html";
-                    break;
-                default:
-                    break;
+            const usuario = await Usuario.findOne({ cpf: inputUsername });
+            if (!usuario) {
+                return response.json({ erro: "Usuário ou senha inválidos! Favor, tente novamente!" });
             }
-            return caminho;
+    
+            const comparar = await bcrypt.compare(inputPassword, usuario.senha);
+            if (!comparar) {
+                return response.json({ erro: "Usuário ou senha inválidos! Favor, tente novamente!" });
+            }
+    
+            // Armazena o privilégio e o nome do usuário na sessão
+            request.session.privilegio = usuario.privilegio;
+            request.session.usuario = usuario.nome; 
+    
+            // Retorna uma resposta de sucesso
+            return response.json({ sucesso: true });
+    
         } catch (err) {
             return response.status(500).json({ error: err.message });
         }

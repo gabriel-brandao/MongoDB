@@ -44,10 +44,44 @@ routes.get("/", (request, response) => {
     response.sendFile(path.join(__dirname + "/views/index.html"));
 });
 
+// Rota para processar a tentativa de login
+routes.post("/login", UsuarioMiddleware.validaLogin);
 
-routes.post("/", UsuarioMiddleware.validaLogin, async (request, response) => {
-    caminho = await UsuarioMiddleware.redireciona(request, response);
-    response.sendFile(path.join(__dirname + caminho));
+// Rota que serve a página com base no privilégio
+routes.get("/dashboard", (request, response) => {
+    if (!request.session.privilegio) {
+        return response.status(403).send('Acesso negado');
+    }
+
+    let caminho;
+    switch (request.session.privilegio) {
+        case "admin":
+            caminho = "/views/systemAdmin.html";
+            break;
+        case "compras":
+            caminho = "/views/compras.html";
+            break;
+        case "gestor":
+            caminho = "/views/gestor.html";
+            break;
+        case "repositor":
+            caminho = "/views/repositor.html";
+            break;
+        default:
+            break;
+    }
+
+    response.sendFile(path.join(__dirname, caminho));
+});
+
+routes.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if(err) {
+            return res.redirect('/dashboard'); // ou outra rota caso ocorra um erro
+        }
+        res.clearCookie('sid'); // 'sid' é o nome padrão do cookie de sessão, mas pode ser diferente se você o tiver configurado de outra forma.
+        res.redirect('/index.html');
+    });
 });
 
 //passa a arrow function importada

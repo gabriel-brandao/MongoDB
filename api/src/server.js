@@ -10,6 +10,8 @@ const express = require("express");
 //importando mongoose
 const mongoose = require("mongoose");
 
+const cookieParser = require('cookie-parser');
+
 //importa as rotas do arquivo routes (dentro de src)
 const routes = require("./routes");
 //importa do arquivo database.js o modulo
@@ -22,11 +24,24 @@ connectToDatabase();
 const app = express();
 const port = 3333;
 
+// Configurações da sessão
+const session = require('express-session');
+
+app.use(cookieParser());
+
+app.use(session({
+  secret: 'optisecret', // Substitua por uma chave secreta de sua escolha
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Em produção, altere para true se estiver usando HTTPS
+}));
+
 app.use(express.static(__dirname + '/views'));
 
 //o express passa a entender JSON, e peço para usar as rotas
 app.use(express.json());
 app.use(routes);
+
 
 //porta onde ficará ouvindo (onde a aplicação ira startar - 3333 convenção), função que executará quando a porta for acessada
 app.listen(3333, () => {
