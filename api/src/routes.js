@@ -102,6 +102,7 @@ routes.delete("/categorias/:id", CategoriaMiddleware.validarId, CategoriaControl
 // para usuarios
 routes.get("/usuarios", UsuarioController.index);
 routes.post("/usuarios", UsuarioController.cadastra);
+routes.get("/usuario/:id", UsuarioMiddleware.obterUsuario);
 routes.put("/usuarios/:id", UsuarioMiddleware.validarId, UsuarioController.atualiza);
 routes.delete("/usuarios/:id", UsuarioMiddleware.validarId, UsuarioController.exclui);
 

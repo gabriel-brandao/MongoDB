@@ -48,4 +48,23 @@ module.exports = {
             return response.status(500).json({ error: err.message });
         }
     },
+
+    async obterUsuario(request, response) {
+        const { id } = request.params;
+
+        if (!isUuid(id)) {
+            return response.status(400).json({ error: "ID inválido!" });
+        }
+
+        try {
+            const usuario = await Usuario.findById(id);
+            if (!usuario) {
+                return response.status(404).json({ error: "Usuario não encontrado." });
+            } else {
+                return response.status(200).json({ usuario: usuario });
+            }
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
+    }
 }

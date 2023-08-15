@@ -68,6 +68,10 @@
     color: black;
 }
 
+.nav-link-yellow {
+    color: #ffd900;
+}
+
 .mid-center {
     top: 50%;
     left: 50%;
@@ -95,6 +99,27 @@
     border: 2px solid #000;
 }
 
+.btn-cat {
+    background-color: black;
+    font-weight: 400;
+    color:white;
+    box-shadow: 5px 4px 1px -1px rgba(255, 217, 0, 1);
+    transition-duration: 0.4s;
+    border-radius: 7px;
+}
+
+.btn-cat:hover {
+    background-color: rgba(255, 217, 0, 1); 
+    font-weight: 400;
+    color: black;
+    box-shadow: none;
+    border: 2px solid #000;
+}
+
+.bg-cat {
+    background-color: rgba(255, 217, 0, 1);
+    color: black;
+}
 
 /*botão de atualizar produto*/
 .btn-atualizar{
@@ -141,6 +166,10 @@
 
 .input-valor{
     width: 80px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 .form-check-input:checked {

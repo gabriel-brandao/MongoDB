@@ -15,7 +15,7 @@ module.exports = {
                 //retorna para o cliente a requisição feita
                 return response.status(200).json({ found: true, produtos });
             else
-                return response.json({ found: false, msg: "<p style='color: #f00'>Não foi encontrado nenhum produto</p>" })
+                return response.json({ found: false, msg: "<p style='color: #f00'>Não foi encontrado nenhum produto</p>" });
         }
         catch (err) {
             response.status(500).json({ error: err.message });

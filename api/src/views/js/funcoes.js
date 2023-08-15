@@ -1,4 +1,222 @@
 /**
+ * USUÁRIO
+ */
+
+const cargoSelect = document.getElementById("cargoUsuario");
+if (cargoSelect) {
+    cargoSelect.addEventListener("change", async () => {
+        let cargoOption = cargoSelect.options[cargoSelect.selectedIndex].value;
+        document.getElementById("msgSemCargo").innerHTML = "";
+    });
+}
+
+async function cadastraUsuario() {
+    document.getElementById("msgSemNome").innerHTML = "";
+    document.getElementById("msgSemCpf").innerHTML = "";
+    document.getElementById("msgSemSenha").innerHTML = "";
+    document.getElementById("msgSenhaRepete").innerHTML = "";
+
+    let nomeUsuario = document.getElementById('nomeUsuario').value;
+    if (!nomeUsuario) {
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let cargoOption = cargoSelect.options[cargoSelect.selectedIndex].value;
+    if (!cargoOption) {
+        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, selecione um Cargo para cadastrar o usuário!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let cpfUsuario = document.getElementById('cpfUsuario').value;
+    if (!cpfUsuario) {
+        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, informe o CPF do usuário para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let senhaUsuario = document.getElementById('senhaUsuario').value;
+    if (!senhaUsuario) {
+        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, informe uma senha para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let senhaRepete = document.getElementById('senhaRepete').value;
+    if (!senhaRepete) {
+        document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, repita a senha para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    if (senhaUsuario != senhaRepete) {
+        document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55; font-weight: bold'>As senhas devem ser iguais para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    const data = {
+        cpf: cpfUsuario,
+        nome: nomeUsuario,
+        senha: senhaUsuario,
+        privilegio: cargoOption,
+    };
+
+    const cadastrar = await axios.post("/usuarios", data);
+    if (cadastrar.data.error) {
+        alert(cadastrar.data.error);
+    } else {
+        alert(cadastrar.data.message);
+        location.reload();
+    }
+    document.getElementById("msgSemNome").innerHTML = "";
+    document.getElementById("msgSemCpf").innerHTML = "";
+    document.getElementById("msgSemSenha").innerHTML = "";
+    document.getElementById("msgSenhaRepete").innerHTML = "";
+}
+
+const usuarioSelect = document.getElementById("usuarioSelect");
+if (usuarioSelect) {
+    listarUsuarios();
+}
+
+if (usuarioSelect) {
+    usuarioSelect.addEventListener("change", async () => {
+        let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
+        document.getElementById("msgSemUsuarios").innerHTML = "";
+        // console.log(categoriaOption);
+        if (!usuarioOption) {
+            document.getElementById("nomeUsuario").value = "";
+            document.getElementById("cargoUsuario").value = "";
+            document.getElementById("cpfUsuario").value = "";
+            document.getElementById("senhaUsuario").value = "";
+            document.getElementById("senhaRepete").value = "";
+            return;
+        }
+
+        const obterUsuario = await axios.get("/usuario/" + usuarioOption);
+        const usuarioSelecionado = obterUsuario.data.usuario;
+        // console.log(produtoSelecionado);
+
+        document.getElementById("nomeUsuario").value = usuarioSelecionado.nome;
+        document.getElementById("cargoUsuario").value = usuarioSelecionado.privilegio;
+        document.getElementById("cpfUsuario").value = usuarioSelecionado.cpf;
+        document.getElementById("senhaUsuario").value = "";
+        document.getElementById("senhaRepete").value = "";
+    });
+}
+
+async function listarUsuarios() {
+    const usuarios = await axios.get("/usuarios");
+    const resposta = usuarios.data.usuarios
+    // console.log(resposta);
+
+    if (usuarios.data.found) {
+        document.getElementById("msgSemUsuarios").innerHTML = "";
+
+        let opcoes = '<option value="">--Selecione um Usuário--</option>';
+        for (let i = 0; i < resposta.length; i++) {
+            // console.log(resposta[i]['nome']);
+            // usuarioSelect.innerHTML = usuarioSelect.innerHTML + '<option value="' + resposta[i]['_id'] + '">' + resposta[i]['nome'] + '</option>';
+            opcoes += '<option value="' + resposta[i]["_id"] + '">' + resposta[i]["nome"] + '</option>';
+        }
+        if (usuarioSelect) {
+            usuarioSelect.innerHTML = opcoes;
+        }
+        // if (categoriaProduto) {
+        //     categoriaProduto.innerHTML = opcoes;
+        // }
+
+    } else {
+        // console.log(categorias.data.msg)
+        document.getElementById("msgSemUsuarios").innerHTML = usuarios.data.msg;
+    }
+}
+
+async function atualizaUsuario() {
+    let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
+    if (!usuarioOption) {
+        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f00'>Selecione um Usuário para Alterar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    document.getElementById("msgSemNome").innerHTML = "";
+    document.getElementById("msgSemCargo").innerHTML = "";
+    document.getElementById("msgSemCpf").innerHTML = "";
+
+    let nomeUsuario = document.getElementById('nomeUsuario').value;
+    if (!nomeUsuario) {
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f00'>O usuário precisa ter um Nome!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let cargoOption = cargoSelect.options[cargoSelect.selectedIndex].value;
+    if (!cargoOption) {
+        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f00'>O usuário precisa ter um Cargo!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let cpfUsuario = document.getElementById('cpfUsuario').value;
+    if (!cpfUsuario) {
+        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f00'>O CPF é obrigatório!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let senhaUsuario = document.getElementById('senhaUsuario').value;
+    let senhaRepete = document.getElementById('senhaRepete').value;
+
+    if (senhaUsuario) {
+        if (!senhaRepete) {
+            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f00'>Repita a senha para atualizar!</p>";
+            scrollTo(0, 0);
+            return;
+        }
+        if (senhaUsuario != senhaRepete) {
+            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f00'>As senhas devem ser iguais para atualizar!</p>";
+            scrollTo(0, 0);
+            return;
+        }
+    }
+    if (senhaRepete && !senhaUsuario) {
+        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f00'>Você preencheu a repetição mas não preencheu o primeiro campo de senha!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    const data = {
+        cpf: cpfUsuario,
+        nome: nomeUsuario,
+        senha: senhaUsuario,
+        privilegio: cargoOption,
+    };
+
+    const atualizar = await axios.put("/usuarios/" + usuarioOption, data);
+    alert(atualizar.data.message);
+    location.reload();
+}
+
+async function removeUsuario() {
+    let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
+    if (!usuarioOption) {
+        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f00'>Selecione um Usuário se quiser Remover!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    if (confirm("Você deseja realmente excluir este Usuário?")) {
+        const remover = await axios.delete("/usuarios/" + usuarioOption);
+        alert(remover.data.message);
+        location.reload();
+    }
+}
+
+/**
  * CATEGORIA
 */
 
@@ -87,11 +305,11 @@ if (categoriaSelect) {
             document.getElementById("vertical").value = "";
             return;
         }
-    
+
         const obterCategoria = await axios.get("/categoria/" + categoriaOption);
         const categoriaSelecionada = obterCategoria.data.categoria;
         // console.log(produtoSelecionado);
-    
+
         document.getElementById("tiposDropdown").value = categoriaSelecionada.tipo;
         document.getElementById("nomeCategoria").value = categoriaSelecionada.nome;
         document.getElementById("larguraMinCategoria").value = categoriaSelecionada.larguraMinima;
@@ -184,7 +402,7 @@ async function atualizaCategoria() {
         larguraMaxima: larguraMaxCategoria,
         orientacao: orientacaoCategoria,
     };
-    
+
     const atualizar = await axios.put("/categorias/" + categoriaOption, data);
     alert(atualizar.data.message);
     location.reload();
@@ -205,7 +423,7 @@ async function removeCategoria() {
         alert("Não é possível remover uma categoria com produtos cadastrados. Para remover, altere a categoria dos produtos relacionados ou remova-os.");
         return;
     }
-    if(confirm("Você deseja realmente excluir esta Categoria?")) {
+    if (confirm("Você deseja realmente excluir esta Categoria?")) {
         const remover = await axios.delete("/categorias/" + categoriaOption);
         alert(remover.data.message);
         location.reload();
@@ -251,7 +469,7 @@ async function cadastraProduto() {
         scrollTo(0, 0);
         return;
     }
-    
+
     let categoriaProd = {
         id: categoriaId,
         nome: categoriaNome
@@ -270,28 +488,28 @@ async function cadastraProduto() {
         scrollTo(0, 0);
         return;
     }
-    
+
     let minProdutos = document.getElementById('minimoProdutos').value;
     if (!minProdutos) {
         document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número mínimo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
-    
+
     let maxProdutos = document.getElementById('maximoProdutos').value;
     if (!maxProdutos) {
         document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número máximo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
-    
+
     let valorUtil = document.getElementById('valorUtilidade').value;
     if (!valorUtil) {
         document.getElementById("msgValorUtil").innerHTML = "<p style='color: #ff0'>O produto deve ter um valor de utilidade!</p>";
         scrollTo(0, 0);
         return;
     }
-    
+
     const data = {
         nome: nomeProduto,
         descricao: descricaoProduto,
@@ -320,7 +538,7 @@ async function cadastraProduto() {
         alert(cadastrar.data.message);
         location.reload();
     }
-    
+
 }
 
 const produtoSelect = document.getElementById("produtoSelect");
@@ -344,11 +562,11 @@ if (produtoSelect) {
             document.getElementById("valorUtilidade").value = "";
             return;
         }
-    
+
         const obterProduto = await axios.get("/produto/" + produtoOption);
         const produtoSelecionado = obterProduto.data.produto;
         // console.log(produtoSelecionado);
-    
+
         document.getElementById("nomeProduto").value = produtoSelecionado.nome;
         document.getElementById("descricaoProduto").value = produtoSelecionado.descricao;
         document.getElementById("categoriaProduto").value = produtoSelecionado.categoria.id;
@@ -429,7 +647,7 @@ async function atualizaProduto() {
         scrollTo(0, 0);
         return;
     }
-    
+
     let categoriaProd = {
         id: categoriaId,
         nome: categoriaNome
@@ -448,28 +666,28 @@ async function atualizaProduto() {
         scrollTo(0, 0);
         return;
     }
-    
+
     let minProdutos = document.getElementById('minimoProdutos').value;
     if (!minProdutos) {
         document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número mínimo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
-    
+
     let maxProdutos = document.getElementById('maximoProdutos').value;
     if (!maxProdutos) {
         document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número máximo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
-    
+
     let valorUtil = document.getElementById('valorUtilidade').value;
     if (!valorUtil) {
         document.getElementById("msgValorUtil").innerHTML = "<p style='color: #ff0'>O produto deve ter um valor de utilidade!</p>";
         scrollTo(0, 0);
         return;
     }
-    
+
     const data = {
         nome: nomeProduto,
         descricao: descricaoProduto,
@@ -507,7 +725,7 @@ async function removeProduto() {
         scrollTo(0, 0);
         return;
     }
-    if(confirm("Você deseja realmente excluir este produto?")) {
+    if (confirm("Você deseja realmente excluir este produto?")) {
         const obterProduto = await axios.get("/produto/" + produtoOption);
         const produtoSelecionado = obterProduto.data.produto;
         const categoriaAntiga = produtoSelecionado.categoria.id;
@@ -517,9 +735,50 @@ async function removeProduto() {
             operacao: "remove"
         }
         await axios.patch("/categorias/" + categoriaAntiga, produtoDadoRemove);
-        
+
         const remover = await axios.delete("/produtos/" + produtoOption);
         alert(remover.data.message);
         location.reload();
+    }
+}
+
+
+/**
+ * GÔNDULA
+ */
+let categoriasAdicionadas = [];
+
+function adicionarCategoria() {
+    const select = document.getElementById('categoriaProduto');
+    const categoriasDiv = document.getElementById('categoriasSelecionadas');
+
+    for (const option of select.options) {
+        if (option.selected) {
+            if (option.value) {
+                if (!categoriasAdicionadas.includes(option.value)) {
+                    categoriasAdicionadas.push(option.value);
+
+                    const badge = document.createElement('span');
+                    badge.className = 'badge bg-cat m-1 cursor-pointer';
+                    badge.textContent = option.text;
+
+                    const closeIcon = document.createElement('span');
+                    closeIcon.innerHTML = '&times;';
+                    closeIcon.className = 'ms-2';
+
+                    badge.appendChild(closeIcon);
+
+                    badge.onclick = function () {
+                        const index = categoriasAdicionadas.indexOf(option.value);
+                        if (index > -1) {
+                            categoriasAdicionadas.splice(index, 1);
+                            badge.remove();
+                        }
+                    };
+
+                    categoriasDiv.appendChild(badge);
+                }
+            }
+        }
     }
 }

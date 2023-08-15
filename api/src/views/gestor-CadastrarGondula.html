@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/Logo.svg" type="image/x-icon">
-    <title>OptiGraM | Cadastrar Produto</title>
+    <title>OptiGraM | Cadastrar Gôndula</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -28,17 +28,13 @@
                 <a class="navbar-brand" href="/dashboard">
                     <img id="logo" src="assets/Logo.svg" alt="OptiGraM">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuCompras"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuGestor"
                     aria-controls="navbarheader" aria-expanded="false" aria-label="Toggle navigation"
                     onclick="toggleMenu()">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse mr-auto" id="menuCompras">
+                <div class="navbar-collapse collapse mr-auto" id="menuGestor">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="compras-ProdutosCadastrados.html" class="nav-link nav-link-black">Produtos
-                                Cadastrados</a>
-                        </li>
                         <li class="nav-item">
                             <a href="/logout" class="nav-link nav-link-black">Sair</a>
                         </li>
@@ -49,75 +45,49 @@
     </header>
 
     <div class=" container mt-5">
-        <h1 style="color: whitesmoke">Cadastro de Produtos</h1>
-        <form action="/produtos" method="post">
+        <h1 style="color: whitesmoke">Cadastrar Gôndula</h1>
+        <form action="/gondula" method="post">
             <div class="form-group">
-                <label for="nomeProduto" class="text-warning">Nome do Produto:</label>
-                <input type="text" class="form-control" id="nomeProduto" name="nome" required>
+                <label for="nomeGondula" class="text-warning">Nome da Gôndula:</label>
+                <input type="text" class="form-control" id="nomeGondula" name="nome" required>
                 <span id="msgSemNome"></span>
             </div>
-            <div class="form-group row">
-                <label for="descricaoProduto" class="col-sm-12 text-warning">Descrição:</label>
-                <div class="col-sm-12">
-                    <textarea class="form-control" id="descricaoProduto" rows="3" name="descricao" required></textarea>
-                </div>
-                <span id="msgSemDesc"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="categoriaProduto" class="form-label text-warning">Categoria:</label>
-                <select class="form-select" id="categoriaProduto">
-                    <option selected>--Selecione uma Categoria--</option>
+            
+            <div class="form-group mt-3">
+                <label for="categoriaProduto" class="form-label text-warning">Categorias:</label>
+                <select class="form-select" id="categoriaProduto" >
+                    <option value="1">Categoria 1</option>
+                    <option value="2">Categoria 2</option>
+                    <option value="3">Categoria 3</option>
+                    <!-- ... Outras categorias ... -->
                 </select>
-                <span id="msgSemCategorias"></span>
+                <button type="button" onclick="adicionarCategoria()" class="btn btn-cat mt-2">Adicionar Categoria</button>
+                
+                <div id="categoriasSelecionadas" class="mt-2">
+                    <!-- Categorias selecionadas aparecerão aqui como badges -->
+                </div>
+                <span id="msgSemCategorias" class="text-danger mt-2 d-block"></span>
             </div>
 
             <div class="form-group">
-                <label for="alturaProduto" class="col-sm-3 text-warning">Altura (cm):</label>
+                <label for="larguraGondula" class="col-sm-3 col-form-label text-warning">Largura (cm):</label>
                 <div class="col-sm-3">
-                    <input type="number" step="0.01" class="form-control input-valor" id="alturaProduto" name="altura"
-                        min="0" required pattern="^[0-9,.]+$">
-                </div>
-                <span id="msgSemAltura"></span>
-            </div>
-            <div class="form-group">
-                <label for="larguraProduto" class="col-sm-3 col-form-label text-warning">Largura (cm):</label>
-                <div class="col-sm-3">
-                    <input type="number" step="0.01" class="form-control input-valor" id="larguraProduto" name="largura"
+                    <input type="number" step="0.01" class="form-control input-valor" id="larguraGondula" name="largura"
                         min="0" required pattern="^[0-9,.]+$">
                 </div>
                 <span id="msgSemLargura"></span>
             </div>
+
             <div class="form-group">
-                <label for="minimoProdutos" class="col-sm-6 col-form-label text-warning">Número Mínimo de Frentes para o
-                    Produto:</label>
+                <label for="qtdNiveis" class="col-sm-6 col-form-label text-warning">Quantidade de Níveis da Gôndula:</label>
                 <div class="col-sm-3">
-                    <input type="number" class="form-control input-valor" id="minimoProdutos" name="minimoProdutos"
+                    <input type="number" class="form-control input-valor" id="qtdNiveis" name="qtdNiveis"
                         min="0" required pattern="^[0-9,.]+$">
                 </div>
-                <span id="msgMinProdutos"></span>
-            </div>
-            <div class="form-group">
-                <label for="maximoProdutos" class="col-sm-3 col-form-label text-warning">Número Máximo de Frentes para o
-                    Produto:</label>
-                <div class="col-sm-3">
-                    <input type="number" class="form-control input-valor" id="maximoProdutos" name="maximoProdutos"
-                        min="0" required pattern="^[0-9,.]+$">
-                </div>
-                <span id="msgMaxProdutos"></span>
-            </div>
-            <div class="form-group">
-                <label for="valorUtilidade" class="col-sm-3 col-form-label text-warning">Valor de Utilidade do
-                    Produto:</label>
-                <div class="col-sm-3 mb-3">
-                    <input type="number" class="form-control input-valor" id="valorUtilidade" name="valorUtilidade"
-                        min="0" required pattern="^[0-9,.]+$">
-                </div>
-                <span id="msgValorUtil"></span>
+                <span id="msgQtdNiveis"></span>
             </div>
 
-            <button type="button" onclick="cadastraProduto()" class="btn btn btn-default btn-lg ">Cadastrar
-                Produto</button>
+            <button style="margin-top: 28px;" type="button" onclick="cadastraGondula()" class="btn btn btn-default btn-lg ">Cadastrar Gôndula</button>
         </form>
     </div>
 

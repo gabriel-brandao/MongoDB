@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/Logo.svg" type="image/x-icon">
-    <title>OptiGraM | Produtos Cadastrados</title>
+    <title>OptiGraM | Usuários Cadastrados</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -30,15 +30,15 @@
                 <a class="navbar-brand" href="/dashboard">
                     <img id="logo" src="assets/Logo.svg" alt="OptiGraM">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuCompras"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuAdmin"
                     aria-controls="navbarheader" aria-expanded="false" aria-label="Toggle navigation"
                     onclick="toggleMenu()">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse mr-auto" id="menuCompras">
+                <div class="navbar-collapse collapse mr-auto" id="menuAdmin">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a href="compras-ProdutosCadastrados.html" class="nav-link nav-link-black">Produtos
+                            <a href="admin-UsuariosCadastrados.html" class="nav-link nav-link-black">Usuários
                                 Cadastrados</a>
                         </li>
                         <li class="nav-item">
@@ -51,15 +51,15 @@
     </header>
 
     <div class=" container mt-5" id="content-main">
-        <h1 style="color: whitesmoke;">Produtos Cadastrados</h1>
-        <form action="/produtos" method="post">
+        <h1 style="color: whitesmoke;">Usuários Cadastrados</h1>
+        <form action="/usuarios" method="post">
 
             <div class="form-group">
-                <label for="Produtos-cadastrados" class="text-warning">Produto:</label>
-                <select class="form-control" id="produtoSelect" name="produtos" required>
+                <label for="produtoSelect" class="text-warning">Usuário:</label>
+                <select class="form-control" id="produtoSelect" name="usuarios" required>
 
                 </select>
-                <span id="msgSemProdutos"></span>
+                <span id="msgSemUsuarios"></span>
             </div>
 
             <div class="d-flex justify-content-center mt-5">
