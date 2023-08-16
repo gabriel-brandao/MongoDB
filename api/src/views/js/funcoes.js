@@ -84,6 +84,11 @@ if (usuarioSelect) {
 
 if (usuarioSelect) {
     usuarioSelect.addEventListener("change", async () => {
+
+        document.getElementById("msgSemNome").innerHTML = "";
+        document.getElementById("msgSemCargo").innerHTML = "";
+        document.getElementById("msgSemCpf").innerHTML = "";
+
         let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
         document.getElementById("msgSemUsuarios").innerHTML = "";
         // console.log(categoriaOption);
@@ -293,6 +298,11 @@ if (categoriaSelect) {
 
 if (categoriaSelect) {
     categoriaSelect.addEventListener("change", async () => {
+
+        document.getElementById("msgSemNome").innerHTML = "";
+        document.getElementById("msgLargMin").innerHTML = "";
+        document.getElementById("msgLargMax").innerHTML = "";
+
         let categoriaOption = categoriaSelect.options[categoriaSelect.selectedIndex].value;
         document.getElementById("msgSemCategorias").innerHTML = "";
         // console.log(categoriaOption);
@@ -342,6 +352,9 @@ async function listarCategorias() {
         }
         if (categoriaProduto) {
             categoriaProduto.innerHTML = opcoes;
+        }
+        if (categoriaGondula) {
+            categoriaGondula.innerHTML = opcoes;
         }
 
     } else {
@@ -548,6 +561,15 @@ if (produtoSelect) {
 
 if (produtoSelect) {
     produtoSelect.addEventListener("change", async () => {
+        document.getElementById("msgSemNome").innerHTML = "";
+        document.getElementById("msgSemDesc").innerHTML = "";
+        document.getElementById("msgSemCategorias").innerHTML = "";
+        document.getElementById("msgSemAltura").innerHTML = "";
+        document.getElementById("msgSemLargura").innerHTML = "";
+        document.getElementById("msgMinProdutos").innerHTML = "";
+        document.getElementById("msgMaxProdutos").innerHTML = "";
+        document.getElementById("msgValorUtil").innerHTML = "";
+
         let produtoOption = produtoSelect.options[produtoSelect.selectedIndex].value;
         document.getElementById("msgSemProdutos").innerHTML = "";
         // console.log(produtoOption);
@@ -747,9 +769,8 @@ async function removeProduto() {
  * GÔNDULA
  */
 let categoriasAdicionadas = [];
-
 function adicionarCategoria() {
-    const select = document.getElementById('categoriaProduto');
+    const select = document.getElementById('categoriaGondula');
     const categoriasDiv = document.getElementById('categoriasSelecionadas');
 
     for (const option of select.options) {
@@ -780,5 +801,219 @@ function adicionarCategoria() {
                 }
             }
         }
+    }
+}
+
+const categoriaGondula = document.getElementById("categoriaGondula");
+if (categoriaGondula) {
+    listarCategorias();
+}
+
+async function cadastraGondula() {
+    document.getElementById("msgSemNome").innerHTML = "";
+    document.getElementById("msgSemCategorias").innerHTML = "";
+    document.getElementById("msgSemLargura").innerHTML = "";
+    document.getElementById("msgQtdNiveis").innerHTML = "";
+
+    let nomeGondula = document.getElementById('nomeGondula').value;
+    if (!nomeGondula) {
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    if (!categoriasAdicionadas.length) {
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione ao menos uma categoria para compor a Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let larguraGondula = document.getElementById('larguraGondula').value;
+    if (!larguraGondula) {
+        document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a largura da Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let qtdNiveis = document.getElementById('qtdNiveis').value;
+    if (!qtdNiveis) {
+        document.getElementById("msgQtdNiveis").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a quantidade de níveis da Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    const data = {
+        nome: nomeGondula,
+        categorias: categoriasAdicionadas,
+        largura: larguraGondula,
+        quantidadeDeNiveis: qtdNiveis,
+    };
+
+    const cadastrar = await axios.post("/gondula", data);
+    if (cadastrar.data.error) {
+        alert(cadastrar.data.error);
+    } else {
+        categoriasAdicionadas = [];
+        alert(cadastrar.data.message);
+        location.reload();
+    }
+    document.getElementById("msgSemNome").innerHTML = "";
+    document.getElementById("msgSemCategorias").innerHTML = "";
+    document.getElementById("msgSemLargura").innerHTML = "";
+    document.getElementById("msgQtdNiveis").innerHTML = "";
+}
+
+const gondulaSelect = document.getElementById("gondulaSelect");
+if (gondulaSelect) {
+    listarGondulas();
+}
+
+async function badgeCategoria(categoria) {
+    const pegaCategoria = await axios.get("/categoria/" + categoria);
+    const categoriaNome = pegaCategoria.data.categoria.nome;
+
+    const badge = document.createElement('span');
+    badge.className = 'badge bg-cat m-1 cursor-pointer';
+    badge.textContent = categoriaNome;
+
+    const closeIcon = document.createElement('span');
+    closeIcon.innerHTML = '&times;';
+    closeIcon.className = 'ms-2';
+
+    badge.appendChild(closeIcon);
+
+    badge.onclick = function () {
+        const index = categoriasAdicionadas.indexOf(categoria);
+        if (index > -1) {
+            categoriasAdicionadas.splice(index, 1);
+            badge.remove();
+        }
+    };
+
+    document.getElementById('categoriasSelecionadas').appendChild(badge);
+}
+
+if (gondulaSelect) {
+    gondulaSelect.addEventListener("change", async () => {
+
+        document.getElementById("msgSemNome").innerHTML = "";
+        document.getElementById("msgSemCategorias").innerHTML = "";
+        document.getElementById("msgSemLargura").innerHTML = "";
+        document.getElementById("msgQtdNiveis").innerHTML = "";
+
+        let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
+        document.getElementById("msgSemGondulas").innerHTML = "";
+        // console.log(gondulaOption);
+        if (!gondulaOption) {
+            document.getElementById("nomeGondula").value = "";
+            document.getElementById("categoriaGondula").value = "";
+            document.getElementById("larguraGondula").value = "";
+            document.getElementById("qtdNiveis").value = "";
+            document.getElementById("categoriasSelecionadas").innerText = "";
+            categoriasAdicionadas = [];
+
+            return;
+        }
+
+        const obterGondula = await axios.get("/gondula/" + gondulaOption);
+        const gondulaSelecionada = obterGondula.data.gondula;
+        // console.log(gondulaSelecionada);
+
+        document.getElementById("nomeGondula").value = gondulaSelecionada.nome;
+
+        document.getElementById("categoriasSelecionadas").innerText = "";
+        categoriasAdicionadas = gondulaSelecionada.categorias;
+        categoriasAdicionadas.forEach(badgeCategoria);
+
+        document.getElementById("larguraGondula").value = gondulaSelecionada.largura;
+        document.getElementById("qtdNiveis").value = gondulaSelecionada.quantidadeDeNiveis;
+    });
+}
+
+async function listarGondulas() {
+    const gondulas = await axios.get("/gondulas");
+    const resposta = gondulas.data.gondulas
+    // console.log(resposta);
+
+    if (gondulas.data.found) {
+        document.getElementById("msgSemGondulas").innerHTML = "";
+
+        let opcoes = '<option value="">--Selecione uma Gôndula--</option>';
+        for (let i = 0; i < resposta.length; i++) {
+            // console.log(resposta[i]['nome']);
+            // gondulaSelect.innerHTML = gondulaSelect.innerHTML + '<option value="' + resposta[i]['_id'] + '">' + resposta[i]['nome'] + '</option>';
+            opcoes += '<option value="' + resposta[i]["_id"] + '">' + resposta[i]["nome"] + '</option>';
+        }
+        gondulaSelect.innerHTML = opcoes;
+    } else {
+        // console.log(gondulas.data.msg)
+        document.getElementById("msgSemGondulas").innerHTML = gondulas.data.msg;
+    }
+}
+
+async function atualizaGondula() {
+    let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
+    if (!gondulaOption) {
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f00'>Selecione uma Gôndula para Alterar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    document.getElementById("msgSemNome").innerHTML = "";
+    document.getElementById("msgSemCategorias").innerHTML = "";
+    document.getElementById("msgSemLargura").innerHTML = "";
+    document.getElementById("msgQtdNiveis").innerHTML = "";
+
+    let nomeGondula = document.getElementById('nomeGondula').value;
+    if (!nomeGondula) {
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>A gôndula precisa ter um nome!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    if (!categoriasAdicionadas.length) {
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione ao menos uma categoria para compor a Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let larguraGondula = document.getElementById('larguraGondula').value;
+    if (!larguraGondula) {
+        document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a largura da Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let qtdNiveis = document.getElementById('qtdNiveis').value;
+    if (!qtdNiveis) {
+        document.getElementById("msgQtdNiveis").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a quantidade de níveis da Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    const data = {
+        nome: nomeGondula,
+        categorias: categoriasAdicionadas,
+        largura: larguraGondula,
+        quantidadeDeNiveis: qtdNiveis,
+    };
+
+    const atualizar = await axios.put("/gondula/" + gondulaOption, data);
+    alert(atualizar.data.message);
+    location.reload();
+}
+
+async function removeGondula() {
+    let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
+    if (!gondulaOption) {
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f00'>Selecione uma Gôndula se quiser Remover!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    if (confirm("Você deseja realmente excluir esta Gôndula?")) {
+        const remover = await axios.delete("/gondula/" + gondulaOption);
+        alert(remover.data.message);
+        location.reload();
     }
 }

@@ -6,12 +6,12 @@ const bcrypt = require("bcrypt");
 module.exports = {
     async index(request, response) {
         try {
-            const usuarios = await Usuario.find().sort({nome: 1});
+            const usuarios = await Usuario.find().sort({ nome: 1 });
             const usuariosCount = await Usuario.find().count();
             if (usuariosCount)
                 return response.status(200).json({ found: true, usuarios });
             else
-            return response.json({ found: false, msg: "<p style='color: #f00'>Não foi encontrado nenhum usuário</p>" });
+                return response.json({ found: false, msg: "<p style='color: #f00'>Não foi encontrado nenhum usuário</p>" });
         }
         catch (err) {
             response.status(500).json({ error: err.message });

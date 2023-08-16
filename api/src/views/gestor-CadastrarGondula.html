@@ -49,23 +49,20 @@
         <form action="/gondula" method="post">
             <div class="form-group">
                 <label for="nomeGondula" class="text-warning">Nome da Gôndula:</label>
-                <input type="text" class="form-control" id="nomeGondula" name="nome" required>
+                <input type="text" placeholder="Ex: Laticínios" class="form-control" id="nomeGondula" name="nome" required>
                 <span id="msgSemNome"></span>
             </div>
             
             <div class="form-group mt-3">
-                <label for="categoriaProduto" class="form-label text-warning">Categorias:</label>
-                <select class="form-select" id="categoriaProduto" >
-                    <option value="1">Categoria 1</option>
-                    <option value="2">Categoria 2</option>
-                    <option value="3">Categoria 3</option>
-                    <!-- ... Outras categorias ... -->
+                <label for="categoriaGondula" class="form-label text-warning">Categorias:</label>
+                <select class="form-select" id="categoriaGondula" >
+                    
                 </select>
-                <button type="button" onclick="adicionarCategoria()" class="btn btn-cat mt-2">Adicionar Categoria</button>
-                
                 <div id="categoriasSelecionadas" class="mt-2">
                     <!-- Categorias selecionadas aparecerão aqui como badges -->
                 </div>
+                <button type="button" onclick="adicionarCategoria()" class="btn btn-cat mt-2">Adicionar Categoria</button>
+                
                 <span id="msgSemCategorias" class="text-danger mt-2 d-block"></span>
             </div>
 

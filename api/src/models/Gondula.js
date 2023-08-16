@@ -11,6 +11,14 @@ const gondulaSchema = new mongoose.Schema({
         type: String,
         required: true// (obrigatório) - ID será uma abstração (responsabilidade) do back-end
     },
+    nome: {
+        type: String, 
+        required: true
+    },
+    categorias: {
+        type: Array, // id
+        default: []
+    },
     largura: {
         type: Number, //double
         required: true

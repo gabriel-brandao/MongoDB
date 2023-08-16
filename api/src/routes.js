@@ -107,8 +107,9 @@ routes.put("/usuarios/:id", UsuarioMiddleware.validarId, UsuarioController.atual
 routes.delete("/usuarios/:id", UsuarioMiddleware.validarId, UsuarioController.exclui);
 
 // para gondula
-routes.get("/gondula", GondulaController.index);
+routes.get("/gondulas", GondulaController.index);
 routes.post("/gondula", GondulaController.cadastra);
+routes.get("/gondula/:id", GondulaMiddleware.obterGondula);
 routes.put("/gondula/:id", GondulaMiddleware.validarId, GondulaController.atualiza);
 routes.delete("/gondula/:id", GondulaMiddleware.validarId, GondulaController.exclui);
 
