@@ -154,6 +154,8 @@ routes.post("/gerarPlanograma", async (req, res) => {
         let w = [];
         let d = [];
         let dMin = [];
+        let v = []; // Incluir para valor por nível
+        let l = []; // Incluir para número mínimo de frentes por item
         let indiceProdutoAtual = 1;
 
         for (let categoria of categorias) {
@@ -162,32 +164,52 @@ routes.post("/gerarPlanograma", async (req, res) => {
 
             let indicesCategoria = [];
             const produtos = await ProdutoMiddleware.produtosPorIds(categoria.produtos);
-            
+            let vCategoria = [];
+
             for (let produto of produtos) {
-                indicesCategoria.push(indiceProdutoAtual++);
+                indicesCategoria.push(indiceProdutoAtual);
+                
                 h.push(produto.altura);
                 w.push(produto.largura);
                 d.push(produto.maximoProdutos);
                 dMin.push(produto.minimoProdutos);
+                l.push(1); // número mínimo de frentes por item
+
+                // Calcular valor por nível:
+                let vProduto = [];
+                for (let i = 0; i < gondula.quantidadeDeNiveis; i++) {
+                    vProduto.push(produto.valorUtilidade * categoria.valorPorArea[gondula.regioes[i]]);
+                }
+                vCategoria.push(vProduto);
+
+                indiceProdutoAtual++;
             }
             Ir.push(`{${indicesCategoria.join(",")}}`);
+            v.push(`[${vCategoria.map(x => x.join(",")).join("], [")}]`);
         }
 
         dadosDat += `
         Wmin = [${Wmin.join(",")}];
         Wmax = [${Wmax.join(",")}];
+
         Ir = [${Ir.join(",")}];
         h = [${h.join(",")}];
         w = [${w.join(",")}];
         d = [${d.join(",")}];
+        // dMin = [${dMin.join(",")}]; // descomentar se necessario 
+        
+        v = [${v.join(", ")}];
+        
+        
+        l = [${l.join(",")}];
         `;
-        // dMin = [${dMin.join(",")}]; // adicionar acima se necessário
+
       
         const dirPath = path.join(__dirname, 'solver');
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath);
         }
-        // Depois de compilar todas as informações no formato, escreva no arquivo:
+        
         const filePath = path.join(__dirname, 'solver', 'dados.dat');
         fs.writeFileSync(filePath, dadosDat);
 

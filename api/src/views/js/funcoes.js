@@ -1147,7 +1147,7 @@ const btnGeraPlan = document.getElementById('botaoGerarPlanograma');
 
 if (btnGeraPlan) {
     // Inicializa o estado do botão com base no localStorage
-    // localStorage.setItem('gerandoPlan', 'false');
+    localStorage.setItem('gerandoPlan', 'false');
     statusBotao();
 }
 
