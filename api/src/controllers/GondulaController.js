@@ -25,49 +25,59 @@ module.exports = {
 
     //rota de criação
     async cadastra(request, response) {
-        //corpo da requisição (info obrigatórias)
-        const { nome, categorias, largura, quantidadeDeNiveis } = request.body;
-
+        // Corpo da requisição (info obrigatórias)
+        const { nome, categorias, altura, largura, quantidadeDeNiveis, regioes } = request.body;
+    
         if (!nome)
             return response.status(400).json({ error: "Informe um nome" });
         
         if (!categorias)
             return response.status(400).json({ error: "Selecione categorias" });
         
+        if (!altura)
+            return response.status(400).json({ error: "Altura não informada" });
+    
         if (!largura)
             return response.status(400).json({ error: "Largura não informada" });
-
+    
         if (!quantidadeDeNiveis)
             return response.status(400).json({ error: "Quantidade de níveis não informada" });
-
-        //instanciar um novo produto
+    
+        if (!regioes || regioes.length !== parseInt(quantidadeDeNiveis) || !regioes.every(val => [0, 1, 2].includes(val)))
+            return response.status(400).json({ error: "Regiões dos níveis não informadas corretamente" });
+    
+        // Instanciar um novo produto
         const gondula = new Gondula({
             _id: uuid(),
             nome,
             categorias,
+            altura,
             largura,
-            quantidadeDeNiveis
+            quantidadeDeNiveis,
+            regioes
         });
-
+    
         try {
-            //tenta salvar no BD
+            // Tenta salvar no BD
             await gondula.save();
-
+    
             return response.status(201).json({ message: "Gondula cadastrada com Sucesso !!" });
         }
         catch (err) {
-            //caso der errado
+            // Caso der errado
             response.status(400).json({ error: err.message });
         }
     },
 
     async atualiza(request, response) {
-        const { nome, categorias, largura, quantidadeDeNiveis } = request.body;
+        const { nome, categorias, altura, largura, quantidadeDeNiveis, regioesNiveis } = request.body;
         
         response.gondula.nome = nome;
         response.gondula.categorias = categorias;
+        response.gondula.altura = altura;
         response.gondula.largura = largura;
         response.gondula.quantidadeDeNiveis = quantidadeDeNiveis;
+        response.gondula.regioes = regioesNiveis;
 
         try {
             await response.gondula.save();

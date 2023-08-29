@@ -19,6 +19,10 @@ const gondulaSchema = new mongoose.Schema({
         type: Array, // id
         default: []
     },
+    altura: {
+        type: Number, //double
+        required: true
+    }, 
     largura: {
         type: Number, //double
         required: true
@@ -26,8 +30,11 @@ const gondulaSchema = new mongoose.Schema({
     quantidadeDeNiveis: {
         type: Number, //Integer
         required: true
+    },
+    regioes: {
+        type: Array,
+        default: []
     }
-    
 });
 
 module.exports = mongoose.model("Gondula", gondulaSchema);

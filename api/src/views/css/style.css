@@ -1,6 +1,4 @@
 #footer {
-    position: relative;
-    bottom: 0;
     width: 100%;
 }
 
@@ -21,7 +19,7 @@
     background-repeat: no-repeat;
     background-position: 0% -4%;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     padding-top: 100px;
 }
@@ -175,4 +173,45 @@
 .form-check-input:checked {
     background-color: #000;
     border-color: #ffc107;
+}
+
+.table-dark thead th {
+    background-color: rgba(255, 217, 0, 1);
+    color: black;
+}
+
+.table-rounded {
+    border-collapse: separate;
+    border-radius: 5px;
+}
+
+.table-rounded th, .table-rounded td {
+    border-left: 1px solid #343a40; /* Cor cinza que parece ser a cor padrão de fundo das tabelas dark no Bootstrap */
+}
+
+.table-rounded th:first-child, .table-rounded td:first-child {
+    border-left: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.table-rounded th:last-child, .table-rounded td:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.fundo-formulario {
+    background-color: rgba(0, 0, 0, 0.7);  /* Preto com 70% de opacidade */
+    padding: 15px;  /* Um pouco de padding para dar espaço aos elementos internos */
+    border-radius: 5px;  /* Borda arredondada para estética */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
 }

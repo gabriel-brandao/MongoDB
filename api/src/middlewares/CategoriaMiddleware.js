@@ -39,5 +39,10 @@ module.exports = {
         } catch (err) {
             return response.status(500).json({ error: err.message });
         }
+    },
+
+    async categoriaPlan(gondula) {
+        const categorias = await Categoria.find({ _id: { $in: gondula.categorias } }).lean();
+        return categorias;
     }
 }

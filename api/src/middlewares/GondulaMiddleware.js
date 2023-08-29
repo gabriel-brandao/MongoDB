@@ -39,5 +39,10 @@ module.exports = {
         } catch (err) {
             return response.status(500).json({ error: err.message });
         }
+    },
+
+    async gondulaPlan(idGondula) {
+        const gondula = await Gondula.findById(idGondula).lean();
+        return gondula;
     }
 }

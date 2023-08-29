@@ -13,6 +13,10 @@ const categoriaSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
+    valorPorArea: {
+        type: Array, // id
+        default: [60,100,50]
+    },
     produtos: {
         type: Array, // id
         default: []

@@ -47,62 +47,97 @@
 
     <div class=" container mt-5">
         <h1 style="color: whitesmoke">Atualizar Gôndula</h1>
-        <form id="formulario">
-            <div class="form-group">
-                <label for="gondulaSelect" class="text-warning">Gôndula:</label>
-                <select class="form-control" id="gondulaSelect" name="gondulas" required>
-                </select>
-                <span id="msgSemGondulas"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="nomeGondula" class="text-warning">Nome da Gôndula:</label>
-                <input type="text" placeholder="Ex: Laticínios" class="form-control" id="nomeGondula" name="nome" required>
-                <span id="msgSemNome"></span>
-            </div>
-            
-            <div class="form-group mt-3">
-                <label for="categoriaGondula" class="form-label text-warning">Categorias:</label>
-                <select class="form-select" id="categoriaGondula" >
-                    
-                </select>
-                <div id="categoriasSelecionadas" class="mt-2">
-                    <!-- Categorias selecionadas aparecerão aqui como badges -->
+        <div class="fundo-formulario">
+            <form id="formulario">
+                <div class="form-group">
+                    <label for="gondulaSelect" class="text-warning" style="font-weight: bold;">Gôndula:</label>
+                    <select class="form-control" id="gondulaSelect" name="gondulas" required>
+                    </select>
+                    <span id="msgSemGondulas"></span>
                 </div>
-                <button type="button" onclick="adicionarCategoria()" class="btn btn-cat mt-2">Adicionar Categoria</button>
+    
+                <div class="form-group">
+                    <label for="nomeGondula" class="text-warning" style="font-weight: bold;">Nome da Gôndula:</label>
+                    <input type="text" placeholder="Ex: Laticínios" class="form-control" id="nomeGondula" name="nome" required>
+                    <span id="msgSemNome"></span>
+                </div>
                 
-                <span id="msgSemCategorias" class="text-danger mt-2 d-block"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="larguraGondula" class="col-sm-3 col-form-label text-warning">Largura (cm):</label>
-                <div class="col-sm-3">
-                    <input type="number" step="0.01" class="form-control input-valor" id="larguraGondula" name="largura"
-                        min="0" required pattern="^[0-9,.]+$">
+                <div class="form-group mt-3">
+                    <label for="categoriaGondula" class="form-label text-warning" style="font-weight: bold;">Categorias:</label>
+                    <select class="form-select" id="categoriaGondula" >
+                        
+                    </select>
+                    <div id="categoriasSelecionadas" class="mt-2">
+                        <!-- Categorias selecionadas aparecerão aqui como badges -->
+                    </div>
+                    <button type="button" onclick="adicionarCategoria()" class="btn btn-cat mt-2">Adicionar Categoria</button>
+                    
+                    <span id="msgSemCategorias" class="text-danger mt-2 d-block"></span>
                 </div>
-                <span id="msgSemLargura"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="qtdNiveis" class="col-sm-6 col-form-label text-warning">Quantidade de Níveis da Gôndula:</label>
-                <div class="col-sm-3">
-                    <input type="number" class="form-control input-valor" id="qtdNiveis" name="qtdNiveis"
-                        min="0" required pattern="^[0-9,.]+$">
+    
+                <div class="form-group">
+                    <label for="alturaGondula" class="col-sm-3 col-form-label text-warning" style="font-weight: bold;">Altura (cm):</label>
+                    <div class="col-sm-3">
+                        <input type="number" step="0.01" class="form-control input-valor" id="alturaGondula" name="altura"
+                            min="0" required pattern="^[0-9,.]+$">
+                    </div>
+                    <span id="msgSemAltura"></span>
                 </div>
-                <span id="msgQtdNiveis"></span>
-            </div>
-
-            <div style="margin-top: 20px;" class="d-flex gap-3 justify-content-start">
-                <div class="pr-2">
-                    <button type="button" onclick="atualizaGondula()" class="btn btn-atualizar btn-lg"><i
-                            class="fas fa-sync-alt"></i> Atualizar Gôndula</button>
+    
+                <div class="form-group">
+                    <label for="larguraGondula" class="col-sm-3 col-form-label text-warning" style="font-weight: bold;">Largura (cm):</label>
+                    <div class="col-sm-3">
+                        <input type="number" step="0.01" class="form-control input-valor" id="larguraGondula" name="largura"
+                            min="0" required pattern="^[0-9,.]+$">
+                    </div>
+                    <span id="msgSemLargura"></span>
                 </div>
-                <div>
-                    <button type="button" onclick="removeGondula()" class="btn btn-remover btn-lg "><i
-                            class="fas fa-trash-alt"></i> Remover Gôndula</button>
+    
+                <div class="form-group">
+                    <label for="numNiveis" class="col-sm-3 col-form-label text-warning" style="font-weight: bold;">Quantidade de Níveis:</label>
+                    <select id="numNiveis" class="form-control" style="max-width: 200px;" onchange="showTabelaNiveis(this.value)">
+                        <option value=""></option>
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                        <option value=6>6</option>
+                        <option value=7>7</option>
+                        <option value=8>8</option>
+                        <option value=9>9</option>
+                        <option value=10>10</option>
+                    </select>
+                    <span id="msgQtdNiveis"></span>
                 </div>
-            </div>
-        </form>
+    
+                <label class="text-warning mt-3" id="labelTabelaNiveis" style="font-weight: bold;">Selecione a Região de cada nível da Gôndula:</label>
+    
+                <table id="tabelaNiveis" class="table table-dark mt-3" style="display:none;">
+                    <thead class="thead-light">
+                        <tr id="nivelHeaders">
+                            <!-- Cabeçalhos da tabela serão inseridos aqui dinamicamente -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="nivelCells">
+                            <!-- Células da tabela serão inseridas aqui dinamicamente -->
+                        </tr>
+                    </tbody>
+                </table>
+    
+                <div style="margin-top: 20px;" class="d-flex gap-3 justify-content-start">
+                    <div class="pr-2">
+                        <button type="button" onclick="atualizaGondula()" class="btn btn-atualizar btn-lg"><i
+                                class="fas fa-sync-alt"></i> Atualizar Gôndula</button>
+                    </div>
+                    <div>
+                        <button type="button" onclick="removeGondula()" class="btn btn-remover btn-lg "><i
+                                class="fas fa-trash-alt"></i> Remover Gôndula</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <h1></h1>

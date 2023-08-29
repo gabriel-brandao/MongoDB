@@ -143,7 +143,7 @@ async function listarUsuarios() {
 async function atualizaUsuario() {
     let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
     if (!usuarioOption) {
-        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f00'>Selecione um Usuário para Alterar!</p>";
+        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f55'>Selecione um Usuário para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -154,21 +154,21 @@ async function atualizaUsuario() {
 
     let nomeUsuario = document.getElementById('nomeUsuario').value;
     if (!nomeUsuario) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f00'>O usuário precisa ter um Nome!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f55'>O usuário precisa ter um Nome!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let cargoOption = cargoSelect.options[cargoSelect.selectedIndex].value;
     if (!cargoOption) {
-        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f00'>O usuário precisa ter um Cargo!</p>";
+        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f55'>O usuário precisa ter um Cargo!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let cpfUsuario = document.getElementById('cpfUsuario').value;
     if (!cpfUsuario) {
-        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f00'>O CPF é obrigatório!</p>";
+        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f55'>O CPF é obrigatório!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -178,18 +178,18 @@ async function atualizaUsuario() {
 
     if (senhaUsuario) {
         if (!senhaRepete) {
-            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f00'>Repita a senha para atualizar!</p>";
+            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55'>Repita a senha para atualizar!</p>";
             scrollTo(0, 0);
             return;
         }
         if (senhaUsuario != senhaRepete) {
-            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f00'>As senhas devem ser iguais para atualizar!</p>";
+            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55'>As senhas devem ser iguais para atualizar!</p>";
             scrollTo(0, 0);
             return;
         }
     }
     if (senhaRepete && !senhaUsuario) {
-        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f00'>Você preencheu a repetição mas não preencheu o primeiro campo de senha!</p>";
+        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f55'>Você preencheu a repetição mas não preencheu o primeiro campo de senha!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -209,7 +209,7 @@ async function atualizaUsuario() {
 async function removeUsuario() {
     let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
     if (!usuarioOption) {
-        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f00'>Selecione um Usuário se quiser Remover!</p>";
+        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f55'>Selecione um Usuário se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -366,14 +366,14 @@ async function listarCategorias() {
 async function atualizaCategoria() {
     let categoriaOption = categoriaSelect.options[categoriaSelect.selectedIndex].value;
     if (!categoriaOption) {
-        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f00'>Selecione uma Categoria para Alterar!</p>";
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f55'>Selecione uma Categoria para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let tipoOption = tipoSelect.options[tipoSelect.selectedIndex].value;
     if (!tipoOption) {
-        document.getElementById("msgNaoSelecionado").innerHTML = "<p style='color: #f00'>A categoria precisa ter um Tipo!</p>";
+        document.getElementById("msgNaoSelecionado").innerHTML = "<p style='color: #f55'>A categoria precisa ter um Tipo!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -383,21 +383,21 @@ async function atualizaCategoria() {
 
     let nomeCategoria = document.getElementById('nomeCategoria').value;
     if (!nomeCategoria) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f00'>A categoria precisa ter um Nome!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f55'>A categoria precisa ter um Nome!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let larguraMinCategoria = document.getElementById('larguraMinCategoria').value;
     if (!larguraMinCategoria) {
-        document.getElementById("msgLargMin").innerHTML = "<p style='color: #f00'>A categoria precisa ter uma Largura Mínima!</p>";
+        document.getElementById("msgLargMin").innerHTML = "<p style='color: #f55'>A categoria precisa ter uma Largura Mínima!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let larguraMaxCategoria = document.getElementById('larguraMaxCategoria').value;
     if (!larguraMaxCategoria) {
-        document.getElementById("msgLargMax").innerHTML = "<p style='color: #f00'>A categoria precisa ter uma Largura Máxima!</p>";
+        document.getElementById("msgLargMax").innerHTML = "<p style='color: #f55'>A categoria precisa ter uma Largura Máxima!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -424,7 +424,7 @@ async function atualizaCategoria() {
 async function removeCategoria() {
     let categoriaOption = categoriaSelect.options[categoriaSelect.selectedIndex].value;
     if (!categoriaOption) {
-        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f00'>Selecione uma Categoria se quiser Remover!</p>";
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f55'>Selecione uma Categoria se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -768,6 +768,8 @@ async function removeProduto() {
 /**
  * GÔNDULA
  */
+let regioesNiveis = [];
+
 let categoriasAdicionadas = [];
 function adicionarCategoria() {
     const select = document.getElementById('categoriaGondula');
@@ -812,6 +814,7 @@ if (categoriaGondula) {
 async function cadastraGondula() {
     document.getElementById("msgSemNome").innerHTML = "";
     document.getElementById("msgSemCategorias").innerHTML = "";
+    document.getElementById("msgSemAltura").innerHTML = "";
     document.getElementById("msgSemLargura").innerHTML = "";
     document.getElementById("msgQtdNiveis").innerHTML = "";
 
@@ -828,6 +831,13 @@ async function cadastraGondula() {
         return;
     }
 
+    let alturaGondula = document.getElementById('alturaGondula').value;
+    if (!alturaGondula) {
+        document.getElementById("msgSemAltura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a altura da Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
     let larguraGondula = document.getElementById('larguraGondula').value;
     if (!larguraGondula) {
         document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a largura da Gôndula!</p>";
@@ -835,18 +845,27 @@ async function cadastraGondula() {
         return;
     }
 
-    let qtdNiveis = document.getElementById('qtdNiveis').value;
-    if (!qtdNiveis) {
+    let qtdNiveis = parseInt(document.getElementById('numNiveis').value);
+    if (!qtdNiveis || isNaN(qtdNiveis) || qtdNiveis <= 0) {
         document.getElementById("msgQtdNiveis").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a quantidade de níveis da Gôndula!</p>";
         scrollTo(0, 0);
+        return;
+    }
+
+    if (qtdNiveis != regioesNiveis.length) {
+        alert('Por favor, selecione a região para todos os níveis.');
+        console.log(qtdNiveis);
+        console.log(regioesNiveis);
         return;
     }
 
     const data = {
         nome: nomeGondula,
         categorias: categoriasAdicionadas,
+        altura: alturaGondula,
         largura: larguraGondula,
         quantidadeDeNiveis: qtdNiveis,
+        regioes: regioesNiveis  // Adicionado o array de regiões
     };
 
     const cadastrar = await axios.post("/gondula", data);
@@ -859,6 +878,7 @@ async function cadastraGondula() {
     }
     document.getElementById("msgSemNome").innerHTML = "";
     document.getElementById("msgSemCategorias").innerHTML = "";
+    document.getElementById("msgSemAltura").innerHTML = "";
     document.getElementById("msgSemLargura").innerHTML = "";
     document.getElementById("msgQtdNiveis").innerHTML = "";
 }
@@ -898,6 +918,7 @@ if (gondulaSelect) {
 
         document.getElementById("msgSemNome").innerHTML = "";
         document.getElementById("msgSemCategorias").innerHTML = "";
+        document.getElementById("msgSemAltura").innerHTML = "";
         document.getElementById("msgSemLargura").innerHTML = "";
         document.getElementById("msgQtdNiveis").innerHTML = "";
 
@@ -907,13 +928,16 @@ if (gondulaSelect) {
         if (!gondulaOption) {
             document.getElementById("nomeGondula").value = "";
             document.getElementById("categoriaGondula").value = "";
+            document.getElementById("alturaGondula").value = "";
             document.getElementById("larguraGondula").value = "";
-            document.getElementById("qtdNiveis").value = "";
+            document.getElementById("numNiveis").value = "";
             document.getElementById("categoriasSelecionadas").innerText = "";
             categoriasAdicionadas = [];
 
+            document.getElementById("tabelaNiveis").hidden = true;
             return;
         }
+        document.getElementById("tabelaNiveis").hidden = false;
 
         const obterGondula = await axios.get("/gondula/" + gondulaOption);
         const gondulaSelecionada = obterGondula.data.gondula;
@@ -925,8 +949,16 @@ if (gondulaSelect) {
         categoriasAdicionadas = gondulaSelecionada.categorias;
         categoriasAdicionadas.forEach(badgeCategoria);
 
+        document.getElementById("alturaGondula").value = gondulaSelecionada.altura;
         document.getElementById("larguraGondula").value = gondulaSelecionada.largura;
-        document.getElementById("qtdNiveis").value = gondulaSelecionada.quantidadeDeNiveis;
+        document.getElementById("numNiveis").value = gondulaSelecionada.quantidadeDeNiveis;
+
+        
+        let regioesNiveis = gondulaSelecionada.regioes;
+        showTabelaNiveis(gondulaSelecionada.quantidadeDeNiveis, regioesNiveis);
+        // for (let i = 0; i < regioesNiveis.length; i++) {
+        //     document.querySelector(`select[name="nivel${i + 1}"]`).value = regioesNiveis[i].toString();
+        // }
     });
 }
 
@@ -944,7 +976,12 @@ async function listarGondulas() {
             // gondulaSelect.innerHTML = gondulaSelect.innerHTML + '<option value="' + resposta[i]['_id'] + '">' + resposta[i]['nome'] + '</option>';
             opcoes += '<option value="' + resposta[i]["_id"] + '">' + resposta[i]["nome"] + '</option>';
         }
-        gondulaSelect.innerHTML = opcoes;
+        if (gondulaSelect) {
+            gondulaSelect.innerHTML = opcoes;
+        }
+        if (gondulaPlanograma) {
+            gondulaPlanograma.innerHTML = opcoes;
+        }
     } else {
         // console.log(gondulas.data.msg)
         document.getElementById("msgSemGondulas").innerHTML = gondulas.data.msg;
@@ -954,13 +991,14 @@ async function listarGondulas() {
 async function atualizaGondula() {
     let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
     if (!gondulaOption) {
-        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f00'>Selecione uma Gôndula para Alterar!</p>";
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f55'>Selecione uma Gôndula para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     document.getElementById("msgSemNome").innerHTML = "";
     document.getElementById("msgSemCategorias").innerHTML = "";
+    document.getElementById("msgSemAltura").innerHTML = "";
     document.getElementById("msgSemLargura").innerHTML = "";
     document.getElementById("msgQtdNiveis").innerHTML = "";
 
@@ -977,6 +1015,13 @@ async function atualizaGondula() {
         return;
     }
 
+    let alturaGondula = document.getElementById('alturaGondula').value;
+    if (!alturaGondula) {
+        document.getElementById("msgSemAltura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a altura da Gôndula!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
     let larguraGondula = document.getElementById('larguraGondula').value;
     if (!larguraGondula) {
         document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a largura da Gôndula!</p>";
@@ -984,8 +1029,8 @@ async function atualizaGondula() {
         return;
     }
 
-    let qtdNiveis = document.getElementById('qtdNiveis').value;
-    if (!qtdNiveis) {
+    let qtdNiveis = parseInt(document.getElementById('numNiveis').value);
+    if (!qtdNiveis || isNaN(qtdNiveis) || qtdNiveis <= 0) {
         document.getElementById("msgQtdNiveis").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a quantidade de níveis da Gôndula!</p>";
         scrollTo(0, 0);
         return;
@@ -994,8 +1039,10 @@ async function atualizaGondula() {
     const data = {
         nome: nomeGondula,
         categorias: categoriasAdicionadas,
+        altura: alturaGondula,
         largura: larguraGondula,
         quantidadeDeNiveis: qtdNiveis,
+        regioesNiveis: regioesNiveis
     };
 
     const atualizar = await axios.put("/gondula/" + gondulaOption, data);
@@ -1006,7 +1053,7 @@ async function atualizaGondula() {
 async function removeGondula() {
     let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
     if (!gondulaOption) {
-        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f00'>Selecione uma Gôndula se quiser Remover!</p>";
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f55'>Selecione uma Gôndula se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -1017,3 +1064,138 @@ async function removeGondula() {
         location.reload();
     }
 }
+
+function showTabelaNiveis(num, regioesNiveisIniciais = []) {
+    regioesNiveis = [...regioesNiveisIniciais];
+    
+    if (regioesNiveis.length === 0) {
+        regioesNiveis = new Array(num).fill(0);
+    }
+        
+    const tabela = document.getElementById('tabelaNiveis');
+    const headers = document.getElementById('nivelHeaders');
+    const cells = document.getElementById('nivelCells');
+    
+    headers.innerHTML = '';  // Limpar cabeçalhos anteriores
+    cells.innerHTML = '';  // Limpar células anteriores
+
+    for (let i = 0; i < num; i++) {
+        // Adicionando cabeçalho
+        const th = document.createElement('th');
+        th.textContent = "Nível " + (i + 1);
+        th.style.textAlign = 'center';  // Centralizando o texto
+        th.style.color = 'black';  // Mudando a cor para preto
+        headers.appendChild(th);
+        
+        // Adicionando células
+        const td = document.createElement('td');
+        const select = document.createElement('select');
+        
+        const initialValue = regioesNiveisIniciais.length > i && regioesNiveisIniciais[i] !== null ? regioesNiveisIniciais[i] : '0';
+        select.value = initialValue;
+
+        select.onchange = function () {
+            regioesNiveis[i] = select.value !== null ? parseInt(select.value) : 0;
+        };
+
+        select.name = `nivel${i + 1}`;
+        select.className = "form-control bg-dark text-warning";  // Estilo do Bootstrap e cor personalizada
+
+        const options = [
+            {value: '0', text: 'Cima'},
+            {value: '1', text: 'Centro'},
+            {value: '2', text: 'Baixo'}
+        ];
+
+        options.forEach(optionData => {
+            const option = document.createElement('option');
+            option.value = optionData.value;
+            option.textContent = optionData.text;
+            option.className = "bg-dark text-warning";
+            // Marca o option como selecionado se ele corresponder ao valor inicial
+            if (optionData.value == initialValue) {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        });
+
+        td.appendChild(select);
+        cells.appendChild(td);
+
+        // if (initialValue !== null) {
+        //     regioesNiveis[i] = parseInt(initialValue);
+        // }
+        // regioesNiveis[i] = parseInt(initialValue);
+    }
+
+    tabela.classList.add('table-rounded');  // Adicionar classe para bordas arredondadas
+    tabela.style.display = 'block';  // Mostrar tabela
+}
+
+/**
+ * PLANOGRAMA
+ */
+const gondulaPlanograma = document.getElementById("gondulaPlanograma");
+if (gondulaPlanograma) {
+    listarGondulas();
+    gondulaPlanograma.addEventListener("change", () => {
+        document.getElementById("msgSemGondulas").innerHTML = "";
+    });
+}
+
+const btnGeraPlan = document.getElementById('botaoGerarPlanograma');
+
+if (btnGeraPlan) {
+    // Inicializa o estado do botão com base no localStorage
+    // localStorage.setItem('gerandoPlan', 'false');
+    statusBotao();
+}
+
+function statusBotao() {
+    // Verifique o valor no localStorage
+    const isGenerating = localStorage.getItem('gerandoPlan') === 'true';
+
+    if (isGenerating) {
+        document.getElementById("msgGerando").innerHTML = "<p style='color: #f33; font-weight: bold; font-size: 20px'>Estamos gerando seu Planograma, por favor aguarde!</p>";
+        btnGeraPlan.disabled = true;
+    } else {
+        document.getElementById("msgGerando").innerHTML = "";
+        btnGeraPlan.disabled = false;
+    }
+}
+
+async function gerarPlanograma() {
+    let gondulaPOption = gondulaPlanograma.options[gondulaPlanograma.selectedIndex].value;
+    if (!gondulaPOption) {
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f33; font-weight: bold;'>Selecione uma Gôndula para Gerar o Planograma!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    // Define o valor no localStorage
+    localStorage.setItem('gerandoPlan', 'true');
+    statusBotao();
+
+    const geraPlan = await axios.post("/gerarPlanograma", { idGondula: gondulaPOption });
+
+    // await new Promise(r => setTimeout(r, 5000));
+
+    checkPlanogramaStatus();
+
+}
+
+function checkPlanogramaStatus() {
+    axios.get('/statusPlanograma').then(response => {
+        const isProcessing = response.data.processing;
+        if (isProcessing) {
+            setTimeout(checkPlanogramaStatus, 5000);
+        } else {
+            localStorage.setItem('gerandoPlan', 'false');
+            statusBotao();
+        }
+    }).catch(error => {
+        console.error('Erro ao verificar o status do planograma:', error);
+        setTimeout(checkPlanogramaStatus, 5000);
+    });
+}
+

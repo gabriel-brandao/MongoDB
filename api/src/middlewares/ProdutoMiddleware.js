@@ -39,5 +39,10 @@ module.exports = {
         } catch (err) {
             return response.status(500).json({ error: err.message });
         }
+    },
+
+    async produtosPorIds(ids) {
+        const produtos = await Produto.find({ "_id": { $in: ids } }).lean();
+        return produtos;
     }
 }

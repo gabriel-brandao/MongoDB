@@ -6,6 +6,10 @@ const path = require("path"); //para caminho do diretório
 
 const axios = require("axios");
 
+const fs = require('fs');
+
+const sh = require("shelljs");
+
 //importar o responsavel por organizar as rotas
 const routes = express.Router();
 
@@ -76,7 +80,7 @@ routes.get("/dashboard", (request, response) => {
 
 routes.get('/logout', (req, res) => {
     req.session.destroy(err => {
-        if(err) {
+        if (err) {
             return res.redirect('/dashboard'); // ou outra rota caso ocorra um erro
         }
         res.clearCookie('sid'); // 'sid' é o nome padrão do cookie de sessão, mas pode ser diferente se você o tiver configurado de outra forma.
@@ -119,8 +123,86 @@ routes.post("/planograma", PlanogramaController.cadastra);
 routes.delete("/planograma/:id", PlanogramaMiddleware.validarId, PlanogramaController.exclui);
 
 routes.post("/shell", () => {
-    const sh = require("shelljs");
     sh.echo("SUCESSO!!! (mensagem no console do backend/terminal)");
+});
+
+let isProcessingPlan = false;
+
+routes.post("/gerarPlanograma", async (req, res) => {
+    try {
+        isProcessingPlan = true;
+
+        const { idGondula } = req.body;
+
+        const gondula = await GondulaMiddleware.gondulaPlan(idGondula);
+        if (!gondula) return res.status(404).send("Gôndula não encontrada.");
+
+        // Recuperar categorias:
+        const categorias = await CategoriaMiddleware.categoriaPlan(gondula);
+
+        let dadosDat = `
+        H = ${gondula.altura};
+        W = ${gondula.largura};
+        qtdeNiveis = ${gondula.quantidadeDeNiveis};
+        qtdeCategorias = ${categorias.length};
+        `;
+
+        let Wmin = [];
+        let Wmax = [];
+        let Ir = [];
+        let h = [];
+        let w = [];
+        let d = [];
+        let dMin = [];
+        let indiceProdutoAtual = 1;
+
+        for (let categoria of categorias) {
+            Wmin.push(categoria.larguraMinima);
+            Wmax.push(categoria.larguraMaxima);
+
+            let indicesCategoria = [];
+            const produtos = await ProdutoMiddleware.produtosPorIds(categoria.produtos);
+            
+            for (let produto of produtos) {
+                indicesCategoria.push(indiceProdutoAtual++);
+                h.push(produto.altura);
+                w.push(produto.largura);
+                d.push(produto.maximoProdutos);
+                dMin.push(produto.minimoProdutos);
+            }
+            Ir.push(`{${indicesCategoria.join(",")}}`);
+        }
+
+        dadosDat += `
+        Wmin = [${Wmin.join(",")}];
+        Wmax = [${Wmax.join(",")}];
+        Ir = [${Ir.join(",")}];
+        h = [${h.join(",")}];
+        w = [${w.join(",")}];
+        d = [${d.join(",")}];
+        `;
+        // dMin = [${dMin.join(",")}]; // adicionar acima se necessário
+      
+        const dirPath = path.join(__dirname, 'solver');
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath);
+        }
+        // Depois de compilar todas as informações no formato, escreva no arquivo:
+        const filePath = path.join(__dirname, 'solver', 'dados.dat');
+        fs.writeFileSync(filePath, dadosDat);
+
+        isProcessingPlan = false;
+
+        res.send({ success: true });
+
+    } catch (err) {
+        isProcessingPlan = false;
+        res.status(500).send(err.message);
+    }
+});
+
+routes.get('/statusPlanograma', (req, res) => {
+    res.json({ processing: isProcessingPlan });
 });
 
 //exporta a função para o server
