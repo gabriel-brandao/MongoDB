@@ -10,6 +10,8 @@ const fs = require('fs');
 
 const sh = require("shelljs");
 
+const { spawn } = require('child_process');
+
 //importar o responsavel por organizar as rotas
 const routes = express.Router();
 
@@ -137,7 +139,6 @@ routes.post("/gerarPlanograma", async (req, res) => {
         const gondula = await GondulaMiddleware.gondulaPlan(idGondula);
         if (!gondula) return res.status(404).send("Gôndula não encontrada.");
 
-        // Recuperar categorias:
         const categorias = await CategoriaMiddleware.categoriaPlan(gondula);
 
         let dadosDat = `
@@ -154,8 +155,8 @@ routes.post("/gerarPlanograma", async (req, res) => {
         let w = [];
         let d = [];
         let dMin = [];
-        let v = []; // Incluir para valor por nível
-        let l = []; // Incluir para número mínimo de frentes por item
+        let v = []; 
+        let l = []; 
         let indiceProdutoAtual = 1;
 
         for (let categoria of categorias) {
@@ -173,9 +174,8 @@ routes.post("/gerarPlanograma", async (req, res) => {
                 w.push(produto.largura);
                 d.push(produto.maximoProdutos);
                 dMin.push(produto.minimoProdutos);
-                l.push(1); // número mínimo de frentes por item
+                l.push(1); // mudar para 2 se necessario
 
-                // Calcular valor por nível:
                 let vProduto = [];
                 for (let i = 0; i < gondula.quantidadeDeNiveis; i++) {
                     vProduto.push(produto.valorUtilidade * categoria.valorPorArea[gondula.regioes[i]]);
@@ -213,9 +213,37 @@ routes.post("/gerarPlanograma", async (req, res) => {
         const filePath = path.join(__dirname, 'solver', 'dados.dat');
         fs.writeFileSync(filePath, dadosDat);
 
-        isProcessingPlan = false;
+        // sh.cd('src/solver');
+        // sh.exec('oplrun modeloMercado.mod dados.dat');
+        // sh.cd('../../');
+        // teste:
+        // sh.cd('src/solver');
+        // sh.exec('oplrun modeloMercado3.mod supermecOleos.dat');
+        // sh.cd('../../');
 
-        res.send({ success: true });
+        const child = spawn('oplrun', ['modeloMercado3.mod', 'supermecOleos.dat'], {
+            cwd: path.join(__dirname, 'solver'), // define o diretório de trabalho
+        });
+
+        child.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        child.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        child.on('close', (code) => {
+            isProcessingPlan = false;
+            res.send({ success: true });
+            if (code !== 0) {
+                console.log(`O processo filho retornou o código ${code}`);
+            } else {
+                console.log('O processo filho foi concluído com sucesso');
+            }
+        });
+
+        console.log('O processamento do plano começou.');
 
     } catch (err) {
         isProcessingPlan = false;
