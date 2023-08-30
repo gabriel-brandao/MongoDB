@@ -54,60 +54,83 @@
 
         <div class="container mt-5">
             <h1  style="color: whitesmoke">Cadastro de Categorias</h1>
-            <form>
+            <div class="fundo-formulario">
+                <form>
 
-                <div class="form-group">
-                    <label for="tiposDropdown" class="form-label text-warning">Escolha um tipo de Categoria:</label>
-                    <select class="form-select" id="tiposDropdown">
-                        <option value="" selected>--Selecione um Tipo de  Categoria--</option>
-                        <option value="destino">Produtos de Destino</option>
-                        <option value="rotina">Produtos de Rotina</option>
-                        <option value="ocasional">Produtos Ocasionais</option>
-                        <option value="conveniencia">Produtos de Conveniência</option>
-                    </select>
-                    <span id="msgNaoSelecionado"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="nomeCategoria" class="text-warning">Nome da Categoria:</label>
-                    <input type="text" placeholder="Ex: Iogurtes" class="form-control" id="nomeCategoria" name="nome" required>
-                    <span id="msgSemNome"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="larguraMinima" class="col-sm-3 text-warning">Largura Mín. (cm):</label>
-                    <div class="col-sm-3">
-                        <input type="number" step="0.01" class="form-control input-valor" id="larguraMinCategoria" name="larguraMin" min="0" required pattern="^[0-9,.]+$">
+                    <div class="form-group">
+                        <label for="tiposDropdown" class="form-label text-warning">Escolha um tipo de Categoria:</label>
+                        <select class="form-select" id="tiposDropdown">
+                            <option value="" selected>--Selecione um Tipo de  Categoria--</option>
+                            <option value="destino">Produtos de Destino</option>
+                            <option value="rotina">Produtos de Rotina</option>
+                            <option value="ocasional">Produtos Ocasionais</option>
+                            <option value="conveniencia">Produtos de Conveniência</option>
+                        </select>
+                        <span id="msgNaoSelecionado"></span>
                     </div>
-                    <span id="msgLargMin"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="larguraMáxima" class="col-sm-3 text-warning">Largura Máx. (cm):</label>
-                    <div class="col-sm-3">
-                        <input type="number" step="0.01" class="form-control input-valor" id="larguraMaxCategoria" name="larguraMax" min="0" required pattern="^[0-9,.]+$">
+    
+                    <div class="form-group">
+                        <label for="nomeCategoria" class="text-warning">Nome da Categoria:</label>
+                        <input type="text" placeholder="Ex: Iogurtes" class="form-control" id="nomeCategoria" name="nome" required>
+                        <span id="msgSemNome"></span>
                     </div>
-                    <span id="msgLargMax"></span>
-                </div>
-
-                <div class="form-group">
-                    <label class="text-warning">Disposição:</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="isHorizontal" id="horizontal" value=horizontal checked>
-                        <label class="form-check-label text-white" for="horizontal">
-                            Horizontal
-                        </label>
+    
+                    <div class="form-group">
+                        <label for="larguraMinCategoria" class="col-sm-3 text-warning">Largura Mín. (cm):</label>
+                        <div class="col-sm-3">
+                            <input type="number" step="1" class="form-control input-valor" id="larguraMinCategoria" name="larguraMin" min="0" required pattern="^[0-9]+$">
+                        </div>
+                        <span id="msgLargMin"></span>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="isHorizontal" id="vertical" value=vertical>
-                        <label class="form-check-label text-white" for="vertical">
-                            Vertical
-                        </label>
+    
+                    <div class="form-group">
+                        <label for="larguraMaxCategoria" class="col-sm-3 text-warning">Largura Máx. (cm):</label>
+                        <div class="col-sm-3">
+                            <input type="number" step="1" class="form-control input-valor" id="larguraMaxCategoria" name="larguraMax" min="0" required pattern="^[0-9]+$">
+                        </div>
+                        <span id="msgLargMax"></span>
                     </div>
-                </div>
 
-                <button type="button" onclick="cadastraCategoria()" class="btn btn btn-default btn-lg ">Cadastrar Categoria</button>
-            </form>
+                    <div class="form-group">
+                        <label for="tabelaRegioes" class="text-warning mt-3">Valor Agregado por Região (em %): </label>
+                        <table id="tabelaRegioes" class="table table-dark mt-3 table-rounded" style="display: block;">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="text-align: center;">Cima</th>
+                                    <th style="text-align: center;">Centro</th>
+                                    <th style="text-align: center;">Baixo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="number" step="1" class="form-control bg-dark text-warning" id="regiaoCima" name="regiaoCima" min="0" max="100" value="60" required pattern="^[0-9]+$"></td>
+                                    <td><input type="number" step="1" class="form-control bg-dark text-warning" id="regiaoCentro" name="regiaoCentro" min="0" max="100" value="100" required pattern="^[0-9]+$"></td>
+                                    <td><input type="number" step="1" class="form-control bg-dark text-warning" id="regiaoBaixo" name="regiaoBaixo" min="0" max="100" value="50" required pattern="^[0-9]+$"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span id="msgRegioes"></span>
+                    </div>
+    
+                    <div class="form-group">
+                        <label class="text-warning">Disposição:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="isHorizontal" id="horizontal" value=horizontal checked>
+                            <label class="form-check-label text-white" for="horizontal">
+                                Horizontal
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="isHorizontal" id="vertical" value=vertical>
+                            <label class="form-check-label text-white" for="vertical">
+                                Vertical
+                            </label>
+                        </div>
+                    </div>
+    
+                    <button type="button" style="margin-top: 25px;" onclick="cadastraCategoria()" class="btn btn btn-default btn-lg ">Cadastrar Categoria</button>
+                </form>
+            </div>
         </div>
 
 

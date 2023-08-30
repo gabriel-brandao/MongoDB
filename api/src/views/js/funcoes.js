@@ -236,31 +236,41 @@ if (tipoSelect) {
 async function cadastraCategoria() {
     let tipoOption = tipoSelect.options[tipoSelect.selectedIndex].value;
     if (!tipoOption) {
-        document.getElementById("msgNaoSelecionado").innerHTML = "<p style='color: #ff0'>Por favor, selecione um Tipo de Categoria para cadastrar!</p>";
+        document.getElementById("msgNaoSelecionado").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, selecione um Tipo de Categoria para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
     document.getElementById("msgSemNome").innerHTML = "";
     document.getElementById("msgLargMin").innerHTML = "";
     document.getElementById("msgLargMax").innerHTML = "";
+    document.getElementById("msgRegioes").innerHTML = "";
 
     let nomeCategoria = document.getElementById('nomeCategoria').value;
     if (!nomeCategoria) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #ff0'>Por favor, informe um nome para cadastrar!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraMinCategoria = document.getElementById('larguraMinCategoria').value;
+    let larguraMinCategoria = Math.trunc(document.getElementById('larguraMinCategoria').value);
     if (!larguraMinCategoria) {
-        document.getElementById("msgLargMin").innerHTML = "<p style='color: #ff0'>Por favor, informe a largura mínima para cadastrar!</p>";
+        document.getElementById("msgLargMin").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe a largura mínima para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraMaxCategoria = document.getElementById('larguraMaxCategoria').value;
+    let larguraMaxCategoria = Math.trunc(document.getElementById('larguraMaxCategoria').value);
     if (!larguraMaxCategoria) {
-        document.getElementById("msgLargMax").innerHTML = "<p style='color: #ff0'>Por favor, informe a largura máxima para cadastrar!</p>";
+        document.getElementById("msgLargMax").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe a largura máxima para cadastrar!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let regiaoCima = Math.trunc(document.getElementById('regiaoCima').value);
+    let regiaoCentro = Math.trunc(document.getElementById('regiaoCentro').value);
+    let regiaoBaixo = Math.trunc(document.getElementById('regiaoBaixo').value);
+    if (!regiaoCima || !regiaoCentro || !regiaoBaixo) {
+        document.getElementById("msgRegioes").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe o valor para cada região!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -274,6 +284,7 @@ async function cadastraCategoria() {
     const data = {
         nome: nomeCategoria,
         tipo: tipoOption,
+        valorPorArea: [regiaoCima, regiaoCentro, regiaoBaixo],
         larguraMinima: larguraMinCategoria,
         larguraMaxima: larguraMaxCategoria,
         orientacao: orientacaoCategoria,
@@ -289,6 +300,7 @@ async function cadastraCategoria() {
     document.getElementById("msgSemNome").innerHTML = "";
     document.getElementById("msgLargMin").innerHTML = "";
     document.getElementById("msgLargMax").innerHTML = "";
+    document.getElementById("msgRegioes").innerHTML = "";
 }
 
 const categoriaSelect = document.getElementById("categoriaSelect");
@@ -302,6 +314,7 @@ if (categoriaSelect) {
         document.getElementById("msgSemNome").innerHTML = "";
         document.getElementById("msgLargMin").innerHTML = "";
         document.getElementById("msgLargMax").innerHTML = "";
+        document.getElementById("msgRegioes").innerHTML = "";
 
         let categoriaOption = categoriaSelect.options[categoriaSelect.selectedIndex].value;
         document.getElementById("msgSemCategorias").innerHTML = "";
@@ -311,6 +324,9 @@ if (categoriaSelect) {
             document.getElementById("nomeCategoria").value = "";
             document.getElementById("larguraMinCategoria").value = "";
             document.getElementById("larguraMaxCategoria").value = "";
+            document.getElementById("regiaoCima").value = "";
+            document.getElementById("regiaoCentro").value = "";
+            document.getElementById("regiaoBaixo").value = "";
             document.getElementById("horizontal").value = "";
             document.getElementById("vertical").value = "";
             return;
@@ -324,6 +340,9 @@ if (categoriaSelect) {
         document.getElementById("nomeCategoria").value = categoriaSelecionada.nome;
         document.getElementById("larguraMinCategoria").value = categoriaSelecionada.larguraMinima;
         document.getElementById("larguraMaxCategoria").value = categoriaSelecionada.larguraMaxima;
+        document.getElementById("regiaoCima").value = categoriaSelecionada.valorPorArea[0];
+        document.getElementById("regiaoCentro").value = categoriaSelecionada.valorPorArea[1];
+        document.getElementById("regiaoBaixo").value = categoriaSelecionada.valorPorArea[2];
         if (categoriaSelecionada.orientacao == "horizontal") {
             document.getElementById("horizontal").checked = true;
         }
@@ -380,6 +399,7 @@ async function atualizaCategoria() {
     document.getElementById("msgSemNome").innerHTML = "";
     document.getElementById("msgLargMin").innerHTML = "";
     document.getElementById("msgLargMax").innerHTML = "";
+    document.getElementById("msgRegioes").innerHTML = "";
 
     let nomeCategoria = document.getElementById('nomeCategoria').value;
     if (!nomeCategoria) {
@@ -388,16 +408,25 @@ async function atualizaCategoria() {
         return;
     }
 
-    let larguraMinCategoria = document.getElementById('larguraMinCategoria').value;
+    let larguraMinCategoria = Math.trunc(document.getElementById('larguraMinCategoria').value);
     if (!larguraMinCategoria) {
         document.getElementById("msgLargMin").innerHTML = "<p style='color: #f55'>A categoria precisa ter uma Largura Mínima!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraMaxCategoria = document.getElementById('larguraMaxCategoria').value;
+    let larguraMaxCategoria = Math.trunc(document.getElementById('larguraMaxCategoria').value);
     if (!larguraMaxCategoria) {
         document.getElementById("msgLargMax").innerHTML = "<p style='color: #f55'>A categoria precisa ter uma Largura Máxima!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    let regiaoCima = Math.trunc(document.getElementById('regiaoCima').value);
+    let regiaoCentro = Math.trunc(document.getElementById('regiaoCentro').value);
+    let regiaoBaixo = Math.trunc(document.getElementById('regiaoBaixo').value);
+    if (!regiaoCima || !regiaoCentro || !regiaoBaixo) {
+        document.getElementById("msgRegioes").innerHTML = "<p style='color: #f55'>Informe valores para cada Região!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -411,6 +440,7 @@ async function atualizaCategoria() {
     const data = {
         nome: nomeCategoria,
         tipo: tipoOption,
+        valorPorArea: [regiaoCima, regiaoCentro, regiaoBaixo],
         larguraMinima: larguraMinCategoria,
         larguraMaxima: larguraMaxCategoria,
         orientacao: orientacaoCategoria,
@@ -488,35 +518,35 @@ async function cadastraProduto() {
         nome: categoriaNome
     }
 
-    let alturaProduto = document.getElementById('alturaProduto').value;
+    let alturaProduto = Math.trunc(document.getElementById('alturaProduto').value);
     if (!alturaProduto) {
         document.getElementById("msgSemAltura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma altura!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraProduto = document.getElementById('larguraProduto').value;
+    let larguraProduto = Math.trunc(document.getElementById('larguraProduto').value);
     if (!larguraProduto) {
         document.getElementById("msgSemLargura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma largura!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let minProdutos = document.getElementById('minimoProdutos').value;
+    let minProdutos = Math.trunc(document.getElementById('minimoProdutos').value);
     if (!minProdutos) {
         document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número mínimo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let maxProdutos = document.getElementById('maximoProdutos').value;
+    let maxProdutos = Math.trunc(document.getElementById('maximoProdutos').value);
     if (!maxProdutos) {
         document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número máximo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let valorUtil = document.getElementById('valorUtilidade').value;
+    let valorUtil = Math.trunc(document.getElementById('valorUtilidade').value);
     if (!valorUtil) {
         document.getElementById("msgValorUtil").innerHTML = "<p style='color: #ff0'>O produto deve ter um valor de utilidade!</p>";
         scrollTo(0, 0);
@@ -675,35 +705,35 @@ async function atualizaProduto() {
         nome: categoriaNome
     }
 
-    let alturaProduto = document.getElementById('alturaProduto').value;
+    let alturaProduto = Math.trunc(document.getElementById('alturaProduto').value);
     if (!alturaProduto) {
         document.getElementById("msgSemAltura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma altura!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraProduto = document.getElementById('larguraProduto').value;
+    let larguraProduto = Math.trunc(document.getElementById('larguraProduto').value);
     if (!larguraProduto) {
         document.getElementById("msgSemLargura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma largura!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let minProdutos = document.getElementById('minimoProdutos').value;
+    let minProdutos = Math.trunc(document.getElementById('minimoProdutos').value);
     if (!minProdutos) {
         document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número mínimo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let maxProdutos = document.getElementById('maximoProdutos').value;
+    let maxProdutos = Math.trunc(document.getElementById('maximoProdutos').value);
     if (!maxProdutos) {
         document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número máximo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let valorUtil = document.getElementById('valorUtilidade').value;
+    let valorUtil = Math.trunc(document.getElementById('valorUtilidade').value);
     if (!valorUtil) {
         document.getElementById("msgValorUtil").innerHTML = "<p style='color: #ff0'>O produto deve ter um valor de utilidade!</p>";
         scrollTo(0, 0);
@@ -831,14 +861,14 @@ async function cadastraGondula() {
         return;
     }
 
-    let alturaGondula = document.getElementById('alturaGondula').value;
+    let alturaGondula = Math.trunc(document.getElementById('alturaGondula').value);
     if (!alturaGondula) {
         document.getElementById("msgSemAltura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a altura da Gôndula!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraGondula = document.getElementById('larguraGondula').value;
+    let larguraGondula = Math.trunc(document.getElementById('larguraGondula').value);
     if (!larguraGondula) {
         document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a largura da Gôndula!</p>";
         scrollTo(0, 0);
@@ -1015,14 +1045,14 @@ async function atualizaGondula() {
         return;
     }
 
-    let alturaGondula = document.getElementById('alturaGondula').value;
+    let alturaGondula = Math.trunc(document.getElementById('alturaGondula').value);
     if (!alturaGondula) {
         document.getElementById("msgSemAltura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a altura da Gôndula!</p>";
         scrollTo(0, 0);
         return;
     }
 
-    let larguraGondula = document.getElementById('larguraGondula').value;
+    let larguraGondula = Math.trunc(document.getElementById('larguraGondula').value);
     if (!larguraGondula) {
         document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a largura da Gôndula!</p>";
         scrollTo(0, 0);

@@ -47,67 +47,69 @@
 
     <div class=" container mt-5">
         <h1 style="color: whitesmoke">Atualizar Usuário</h1>
-        <form id="formulario">
-            <div class="form-group">
-                <label for="usuarioSelect" class="text-warning">Usuário:</label>
-                <select class="form-control" id="usuarioSelect" name="usuarios" required>
-                </select>
-                <span id="msgSemUsuarios"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="nomeUsuario" class="text-warning">Nome:</label>
-                <input type="text" placeholder="Nome do Usuário" class="form-control" id="nomeUsuario" name="nome" required>
-                <span id="msgSemNome"></span>
-            </div>
-            
-            <div class="form-group col-sm-3">
-                <label for="cargoUsuario" class="form-label text-warning">Cargo:</label>
-                <select class="form-select" id="cargoUsuario">
-                    <option value="" selected></option>
-                    <option value="admin">Administrador do Sistema</option>
-                    <option value="gestor">Gestor do Supermercado</option>
-                    <option value="compras">Responsável de Compras</option>
-                    <option value="repositor">Repositor de Produtos</option>
-                </select>
-                <span id="msgSemCargo"></span>
-            </div>
-
-            <div class="form-group col-sm-2">
-                <label for="cpfUsuario" class="text-warning">CPF do Usuário:</label>
-                <input oninput="mascara(this)" type="text" placeholder="000.000.000-00" class="form-control" id="cpfUsuario" name="cpf" required>
-                <span id="msgSemCpf"></span>
-            </div>
-            
-            <div class="form-group">
-                <label for="senhaUsuario" class="col-sm-12 text-warning">Senha do Usuário:</label>
-                <div class="col-sm-3">
-                    <input type="password" class="form-control" id="senhaUsuario" name="senhaUsuario"
-                            placeholder="Senha" required>
+        <div class="fundo-formulario">
+            <form id="formulario">
+                <div class="form-group">
+                    <label for="usuarioSelect" class="text-warning">Usuário:</label>
+                    <select class="form-control" id="usuarioSelect" name="usuarios" required>
+                    </select>
+                    <span id="msgSemUsuarios"></span>
                 </div>
-                <span id="msgSemSenha"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="senhaRepete" class="col-sm-12 text-warning">Repita a Senha do Usuário:</label>
-                <div class="col-sm-3">
-                    <input type="password" class="form-control" id="senhaRepete" name="senhaRepete"
-                            placeholder="Repita a Senha" required>
+    
+                <div class="form-group">
+                    <label for="nomeUsuario" class="text-warning">Nome:</label>
+                    <input type="text" placeholder="Nome do Usuário" class="form-control" id="nomeUsuario" name="nome" required>
+                    <span id="msgSemNome"></span>
                 </div>
-                <span id="msgSenhaRepete"></span>
-            </div>
-
-            <div style="margin-top: 20px;" class="d-flex gap-3 justify-content-start">
-                <div class="pr-2">
-                    <button type="button" onclick="atualizaUsuario()" class="btn btn-atualizar btn-lg"><i
-                            class="fas fa-sync-alt"></i> Atualizar Usuário</button>
+                
+                <div class="form-group col-sm-3">
+                    <label for="cargoUsuario" class="form-label text-warning">Cargo:</label>
+                    <select class="form-select" id="cargoUsuario">
+                        <option value="" selected></option>
+                        <option value="admin">Administrador do Sistema</option>
+                        <option value="gestor">Gestor do Supermercado</option>
+                        <option value="compras">Responsável de Compras</option>
+                        <option value="repositor">Repositor de Produtos</option>
+                    </select>
+                    <span id="msgSemCargo"></span>
                 </div>
-                <div>
-                    <button type="button" onclick="removeUsuario()" class="btn btn-remover btn-lg "><i
-                            class="fas fa-trash-alt"></i> Remover Usuário</button>
+    
+                <div class="form-group col-sm-2">
+                    <label for="cpfUsuario" class="text-warning">CPF do Usuário:</label>
+                    <input oninput="mascara(this)" type="text" placeholder="000.000.000-00" class="form-control" id="cpfUsuario" name="cpf" required>
+                    <span id="msgSemCpf"></span>
                 </div>
-            </div>
-        </form>
+                
+                <div class="form-group">
+                    <label for="senhaUsuario" class="col-sm-12 text-warning">Senha do Usuário:</label>
+                    <div class="col-sm-3">
+                        <input type="password" class="form-control" id="senhaUsuario" name="senhaUsuario"
+                                placeholder="Senha" required>
+                    </div>
+                    <span id="msgSemSenha"></span>
+                </div>
+    
+                <div class="form-group">
+                    <label for="senhaRepete" class="col-sm-12 text-warning">Repita a Senha do Usuário:</label>
+                    <div class="col-sm-3">
+                        <input type="password" class="form-control" id="senhaRepete" name="senhaRepete"
+                                placeholder="Repita a Senha" required>
+                    </div>
+                    <span id="msgSenhaRepete"></span>
+                </div>
+    
+                <div style="margin-top: 20px;" class="d-flex gap-3 justify-content-start">
+                    <div class="pr-2">
+                        <button type="button" onclick="atualizaUsuario()" class="btn btn-atualizar btn-lg"><i
+                                class="fas fa-sync-alt"></i> Atualizar Usuário</button>
+                    </div>
+                    <div>
+                        <button type="button" onclick="removeUsuario()" class="btn btn-remover btn-lg "><i
+                                class="fas fa-trash-alt"></i> Remover Usuário</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <h1></h1>
     

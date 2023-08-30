@@ -25,7 +25,7 @@ module.exports = {
     //rota de criação
     async cadastra (request, response){
         //corpo da requisição (info obrigatórias)
-        const {nome, tipo, larguraMinima, larguraMaxima, orientacao} = request.body;
+        const {nome, tipo, valorPorArea, larguraMinima, larguraMaxima, orientacao} = request.body;
 
         if(!nome)
             return response.status(400).json({error: "nome não informado"});
@@ -33,6 +33,9 @@ module.exports = {
         if(!tipo)
             return response.status(400).json({error: "tipo de categoria não informado"});
         
+        if(!valorPorArea)
+            return response.status(400).json({error: "valor por região não informado"});
+
         if(!larguraMinima)
             return response.status(400).json({error: "largura mínima não informada"});
         
@@ -44,6 +47,7 @@ module.exports = {
             _id: uuid(), 
             nome,
             tipo,
+            valorPorArea,
             larguraMinima,
             larguraMaxima,
             orientacao,
@@ -62,10 +66,11 @@ module.exports = {
     },
 
     async atualiza(request, response) {
-        const {nome, tipo, larguraMinima, larguraMaxima, orientacao} = request.body;
+        const {nome, tipo, valorPorArea, larguraMinima, larguraMaxima, orientacao} = request.body;
 
         response.categoria.nome = nome;
         response.categoria.tipo = tipo;
+        response.categoria.valorPorArea = valorPorArea;
         response.categoria.larguraMinima = larguraMinima;
         response.categoria.larguraMaxima = larguraMaxima;
         response.categoria.orientacao = orientacao;
