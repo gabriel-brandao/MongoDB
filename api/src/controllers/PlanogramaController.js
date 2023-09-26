@@ -15,30 +15,22 @@ module.exports = {
     },
 
     //rota de criação
-    async cadastra(request, response) {
-        //corpo da requisição (info obrigatórias)
-        const { usuario, gondula } = request.body;
-
-        if (!gondula)
-            return response.status(400).json({ error: "voce precisa informar uma gondula" });
-
+    async cadastra(data) {
+        
+        data._id = uuid();
 
         //instanciar um novo planograma
-        const planograma = new Planograma({
-            _id: uuid(),
-            usuario,
-            gondula
-        });
+        const planograma = new Planograma(data);
 
         try {
             //tenta salvar no BD
             await planograma.save();
 
-            return response.status(201).json({ message: "Planograma gerado com Sucesso !!" });
+            return;
         }
         catch (err) {
             //caso der errado
-            response.status(400).json({ error: err.message });
+            throw err.message;
         }
     },
 

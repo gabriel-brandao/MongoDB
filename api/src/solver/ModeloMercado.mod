@@ -20,7 +20,7 @@ int Wmin[R] = ...;
 int Wmax[R] = ...;
 
 int M[r in R] = ftoi(floor(W/Wmin[r]));
-{tuplas} RS = {<r,s>|r in R, s in 1..M[r]}; //Tuplas com o conjunto de categorias da instância e conjunto de módulos possíveis para cada categoria
+{tuplas} RS = {<r,s>|r in R, s in 1..M[r]}; //Tuplas com o conjunto de categorias da instï¿½ncia e conjunto de mï¿½dulos possï¿½veis para cada categoria
 
 {int} Ir[R] = ...;//range com os itens de cada categoria - dados de entrada
 int qtdeItens = sum(r in R)(card(Ir[r]));
@@ -215,11 +215,103 @@ cx:
 */	
 
 //CORTES
-forall(r in R, s in 1..M[r]-1, k in K)//Força a alocar os módulos nas primeiras posições
+forall(r in R, s in 1..M[r]-1, k in K)//Forï¿½a a alocar os mï¿½dulos nas primeiras posiï¿½ï¿½es
   q[k][<r,s>]>=q[k][<r,s+1>];
 
 forall(k in K, j in I, <r,s> in RS: j not in Ir[r])
   x[j][k][<r,s>] == 0;
 
+
+}
+
+execute{
+	var ofile = new IloOplOutputFile("modelRun.txt");
+	var contaModulos = 0;
+	for(var m in RS){
+		if(thisOplModel.z[m]>0){
+			contaModulos++;			
+		}	
+	}
+	ofile.writeln("no_modulos ",contaModulos);
+	ofile.writeln();
+	var aux = 1;
+	for(var m in RS){
+		if(thisOplModel.z[m]>0){
+			ofile.writeln("modulo ",aux);
+			aux++;
+			ofile.writeln("categoria ",m.i);
+			ofile.writeln("largura ",z[m]);
+			var contaNiveis = 0;
+			for(var k in K){
+				contaNiveis++;			
+			}
+			ofile.writeln("no_niveis ",contaNiveis);
+			ofile.writeln();
+			var contNivel = 1;
+			for(var k in K){
+				ofile.writeln("nivel ",contNivel);
+				contNivel++;		
+				ofile.writeln("altura ",thisOplModel.y[k]);
+				var tiposItens = 0;
+				
+				ofile.writeln("tipos_itens ",tiposItens);
+				if(tiposItens>0){
+					var indiceItem;
+					var vetItens = new Array();
+					var vetQtde = new Array();
+					for(irs in IRS){
+						if(thisOplModel.deltaI[k][irs]==1 && irs.r == m.r && irs.s == m.s){
+							indiceItem = irs.i;
+							vetItens[1] = indiceItem;
+							vetQtde[1] = thisOplModel.alfa[k][irs];		
+    					}						
+					}
+					var indiceVets = 1;
+					var indiceFinal;
+					for(irs in IRS){
+						if(thisOplModel.deltaF[k][irs]==1 && irs.r == m.r && irs.s == m.s){
+							indiceFinal = irs.i;
+    					}						
+					}
+					var testeValidade = 1;
+					var contaIter = 0;
+					while(indiceItem!=indiceFinal && testeValidade == 1 && contaIter<1000){
+						testeValidade = 0;
+						contaIter++;				
+						for(var j in Ir[m.r]){
+							if(I2RS.find(indiceItem,j,m.r,m.s) != null){						
+								if(thisOplModel.beta[k][I2RS.find(indiceItem,j,m.r,m.s)]==1){
+									indiceVets++;
+									indiceItem = j;
+									vetItens[indiceVets] = j;
+									vetQtde[indiceVets] = thisOplModel.alfa[k][IRS.find(j,m.r,m.s)];
+									testeValidade = 1;
+									break;					
+								}
+      						}													
+						}				
+					}
+					if(contaIter >= 1000){
+						ofile.write("Erro de ordenaï¿½ï¿½o:Limite de iteraï¿½ï¿½es atingido");					
+					}
+					if(testeValidade == 0){
+						ofile.write("Erro de continuidade!");					
+					}
+					ofile.write("itens ");
+					for(var i = 1; i<=indiceVets;i++)
+						ofile.write(vetItens[i]-1," ");				
+					ofile.writeln();
+					ofile.write("quantidade ");
+					for(var i = 1; i<=indiceVets;i++)
+						ofile.write(vetQtde[i]," ");				
+					ofile.writeln();
+   				}
+   				ofile.writeln();					
+ 			}			
+ 		}				
+	}
+	
+
+	ofile.close();
 
 }

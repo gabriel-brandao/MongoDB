@@ -20,5 +20,52 @@ module.exports = {
         }
 
         next();
+    },
+
+    processData(data) {
+        const lines = data.split('\n').map(line => line.trim());
+        const result = {};
+    
+        let currentModule = null;
+        let currentLevel = null;
+    
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].startsWith('no_modulos')) {
+                result.no_modulos = parseInt(lines[i].split(' ')[1]);
+                result.modulos = [];
+            } else if (lines[i].startsWith('modulo')) {
+                currentModule = {
+                    categoria: null,
+                    largura: null,
+                    no_niveis: null,
+                    niveis: []
+                };
+                result.modulos.push(currentModule);
+            } else if (lines[i].startsWith('categoria')) {
+                currentModule.categoria = parseInt(lines[i].split(' ')[1]);
+            } else if (lines[i].startsWith('largura')) {
+                currentModule.largura = parseInt(lines[i].split(' ')[1]);
+            } else if (lines[i].startsWith('no_niveis')) {
+                currentModule.no_niveis = parseInt(lines[i].split(' ')[1]);
+            } else if (lines[i].startsWith('nivel')) {
+                currentLevel = {
+                    altura: null,
+                    tipos_itens: null,
+                    itens: [],
+                    quantidade: []
+                };
+                currentModule.niveis.push(currentLevel);
+            } else if (lines[i].startsWith('altura')) {
+                currentLevel.altura = parseInt(lines[i].split(' ')[1]);
+            } else if (lines[i].startsWith('tipos_itens')) {
+                currentLevel.tipos_itens = parseInt(lines[i].split(' ')[1]);
+            } else if (lines[i].startsWith('itens')) {
+                currentLevel.itens = lines[i].split(' ').slice(1).map(item => parseInt(item));
+            } else if (lines[i].startsWith('quantidade')) {
+                currentLevel.quantidade = lines[i].split(' ').slice(1).map(qty => parseInt(qty));
+            }
+        }
+    
+        return result;
     }
 }

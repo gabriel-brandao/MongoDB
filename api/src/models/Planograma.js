@@ -12,7 +12,19 @@ const planogramaSchema = new mongoose.Schema({
     gondula: {
         type: String,
         required: true
-    }    
+    },
+    no_modulos: Number,
+    modulos: [{
+        categoria: Number,
+        largura: Number,
+        no_niveis: Number,
+        niveis: [{
+            altura: Number,
+            tipos_itens: Number,
+            itens: [Number],
+            quantidade: [Number]
+        }]
+    }]    
 });
 
 module.exports = mongoose.model("Planograma", planogramaSchema);

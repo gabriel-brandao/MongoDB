@@ -30,8 +30,8 @@
                 <form class="p-4 p-md-5 border rounded-3 formLogin" method="post" action="/">
                     <div class="form-floating mb-3">
                         <input oninput="mascara(this)" type="text" class="form-control" id="inputUsername"
-                            name="inputUsername" placeholder="Username" required>
-                        <label for="inputUsername">Username</label>
+                            name="inputUsername" placeholder="000.000.000-00" required>
+                        <label for="inputUsername">Login</label>
                         <span id="msgUsername"></span>
                     </div>
                     <div class="form-floating mb-3">
@@ -96,13 +96,13 @@
 
             let inputUsername = document.getElementById('inputUsername').value;
             if (!inputUsername) {
-                document.getElementById("msgUsername").innerHTML = "<p style='color: #f00'>Preencha o seu Username!</p>";
+                document.getElementById("msgUsername").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe seu Login!</p>";
                 scrollTo(0, 0);
                 return;
             }
             let inputPassword = document.getElementById('inputPassword').value;
             if (!inputPassword) {
-                document.getElementById("msgSenha").innerHTML = "<p style='color: #f00'>Preencha a Senha!</p>";
+                document.getElementById("msgSenha").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe a Senha!</p>";
                 scrollTo(0, 0);
                 return;
             }

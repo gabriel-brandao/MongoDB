@@ -18,41 +18,41 @@ async function cadastraUsuario() {
 
     let nomeUsuario = document.getElementById('nomeUsuario').value;
     if (!nomeUsuario) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let cargoOption = cargoSelect.options[cargoSelect.selectedIndex].value;
     if (!cargoOption) {
-        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, selecione um Cargo para cadastrar o usuário!</p>";
+        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, selecione um Cargo para cadastrar o usuário!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let cpfUsuario = document.getElementById('cpfUsuario').value;
     if (!cpfUsuario) {
-        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, informe o CPF do usuário para cadastrar!</p>";
+        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe o CPF do usuário para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let senhaUsuario = document.getElementById('senhaUsuario').value;
     if (!senhaUsuario) {
-        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, informe uma senha para cadastrar!</p>";
+        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe uma senha para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let senhaRepete = document.getElementById('senhaRepete').value;
     if (!senhaRepete) {
-        document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55; font-weight: bold'>Por favor, repita a senha para cadastrar!</p>";
+        document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, repita a senha para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     if (senhaUsuario != senhaRepete) {
-        document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55; font-weight: bold'>As senhas devem ser iguais para cadastrar!</p>";
+        document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f33; font-weight: bold'>As senhas devem ser iguais para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -143,7 +143,7 @@ async function listarUsuarios() {
 async function atualizaUsuario() {
     let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
     if (!usuarioOption) {
-        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f55'>Selecione um Usuário para Alterar!</p>";
+        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione um Usuário para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -154,21 +154,21 @@ async function atualizaUsuario() {
 
     let nomeUsuario = document.getElementById('nomeUsuario').value;
     if (!nomeUsuario) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f55'>O usuário precisa ter um Nome!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>O usuário precisa ter um Nome!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let cargoOption = cargoSelect.options[cargoSelect.selectedIndex].value;
     if (!cargoOption) {
-        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f55'>O usuário precisa ter um Cargo!</p>";
+        document.getElementById("msgSemCargo").innerHTML = "<p style='color: #f33; font-weight: bold'>O usuário precisa ter um Cargo!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let cpfUsuario = document.getElementById('cpfUsuario').value;
     if (!cpfUsuario) {
-        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f55'>O CPF é obrigatório!</p>";
+        document.getElementById("msgSemCpf").innerHTML = "<p style='color: #f33; font-weight: bold'>O CPF é obrigatório!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -178,18 +178,18 @@ async function atualizaUsuario() {
 
     if (senhaUsuario) {
         if (!senhaRepete) {
-            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55'>Repita a senha para atualizar!</p>";
+            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f33; font-weight: bold'>Repita a senha para atualizar!</p>";
             scrollTo(0, 0);
             return;
         }
         if (senhaUsuario != senhaRepete) {
-            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f55'>As senhas devem ser iguais para atualizar!</p>";
+            document.getElementById("msgSenhaRepete").innerHTML = "<p style='color: #f33; font-weight: bold'>As senhas devem ser iguais para atualizar!</p>";
             scrollTo(0, 0);
             return;
         }
     }
     if (senhaRepete && !senhaUsuario) {
-        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f55'>Você preencheu a repetição mas não preencheu o primeiro campo de senha!</p>";
+        document.getElementById("msgSemSenha").innerHTML = "<p style='color: #f33; font-weight: bold'>Você preencheu a repetição mas não preencheu o primeiro campo de senha!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -209,7 +209,7 @@ async function atualizaUsuario() {
 async function removeUsuario() {
     let usuarioOption = usuarioSelect.options[usuarioSelect.selectedIndex].value;
     if (!usuarioOption) {
-        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f55'>Selecione um Usuário se quiser Remover!</p>";
+        document.getElementById("msgSemUsuarios").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione um Usuário se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -385,14 +385,14 @@ async function listarCategorias() {
 async function atualizaCategoria() {
     let categoriaOption = categoriaSelect.options[categoriaSelect.selectedIndex].value;
     if (!categoriaOption) {
-        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f55'>Selecione uma Categoria para Alterar!</p>";
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione uma Categoria para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let tipoOption = tipoSelect.options[tipoSelect.selectedIndex].value;
     if (!tipoOption) {
-        document.getElementById("msgNaoSelecionado").innerHTML = "<p style='color: #f55'>A categoria precisa ter um Tipo!</p>";
+        document.getElementById("msgNaoSelecionado").innerHTML = "<p style='color: #f33; font-weight: bold'>A categoria precisa ter um Tipo!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -403,21 +403,21 @@ async function atualizaCategoria() {
 
     let nomeCategoria = document.getElementById('nomeCategoria').value;
     if (!nomeCategoria) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f55'>A categoria precisa ter um Nome!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>A categoria precisa ter um Nome!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let larguraMinCategoria = Math.trunc(document.getElementById('larguraMinCategoria').value);
     if (!larguraMinCategoria) {
-        document.getElementById("msgLargMin").innerHTML = "<p style='color: #f55'>A categoria precisa ter uma Largura Mínima!</p>";
+        document.getElementById("msgLargMin").innerHTML = "<p style='color: #f33; font-weight: bold'>A categoria precisa ter uma Largura Mínima!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let larguraMaxCategoria = Math.trunc(document.getElementById('larguraMaxCategoria').value);
     if (!larguraMaxCategoria) {
-        document.getElementById("msgLargMax").innerHTML = "<p style='color: #f55'>A categoria precisa ter uma Largura Máxima!</p>";
+        document.getElementById("msgLargMax").innerHTML = "<p style='color: #f33; font-weight: bold'>A categoria precisa ter uma Largura Máxima!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -426,7 +426,7 @@ async function atualizaCategoria() {
     let regiaoCentro = Math.trunc(document.getElementById('regiaoCentro').value);
     let regiaoBaixo = Math.trunc(document.getElementById('regiaoBaixo').value);
     if (!regiaoCima || !regiaoCentro || !regiaoBaixo) {
-        document.getElementById("msgRegioes").innerHTML = "<p style='color: #f55'>Informe valores para cada Região!</p>";
+        document.getElementById("msgRegioes").innerHTML = "<p style='color: #f33; font-weight: bold'>Informe valores para cada Região!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -454,7 +454,7 @@ async function atualizaCategoria() {
 async function removeCategoria() {
     let categoriaOption = categoriaSelect.options[categoriaSelect.selectedIndex].value;
     if (!categoriaOption) {
-        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f55'>Selecione uma Categoria se quiser Remover!</p>";
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione uma Categoria se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -493,14 +493,14 @@ async function cadastraProduto() {
 
     let nomeProduto = document.getElementById('nomeProduto').value;
     if (!nomeProduto) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #ff0'>Por favor, informe um nome para cadastrar!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let descricaoProduto = document.getElementById('descricaoProduto').value;
     if (!descricaoProduto) {
-        document.getElementById("msgSemDesc").innerHTML = "<p style='color: #ff0'>O produto deve ter uma descrição!</p>";
+        document.getElementById("msgSemDesc").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma descrição!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -508,7 +508,7 @@ async function cadastraProduto() {
     const categoriaNome = categoriaProduto.options[categoriaProduto.selectedIndex].text;
     let categoriaId = categoriaProduto.options[categoriaProduto.selectedIndex].value;
     if (!categoriaId) {
-        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #ff0'>O produto deve ter uma categoria!</p>";
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma categoria!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -520,35 +520,35 @@ async function cadastraProduto() {
 
     let alturaProduto = Math.trunc(document.getElementById('alturaProduto').value);
     if (!alturaProduto) {
-        document.getElementById("msgSemAltura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma altura!</p>";
+        document.getElementById("msgSemAltura").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma altura!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let larguraProduto = Math.trunc(document.getElementById('larguraProduto').value);
     if (!larguraProduto) {
-        document.getElementById("msgSemLargura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma largura!</p>";
+        document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma largura!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let minProdutos = Math.trunc(document.getElementById('minimoProdutos').value);
     if (!minProdutos) {
-        document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número mínimo de frentes!</p>";
+        document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, defina o número mínimo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let maxProdutos = Math.trunc(document.getElementById('maximoProdutos').value);
     if (!maxProdutos) {
-        document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número máximo de frentes!</p>";
+        document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, defina o número máximo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let valorUtil = Math.trunc(document.getElementById('valorUtilidade').value);
     if (!valorUtil) {
-        document.getElementById("msgValorUtil").innerHTML = "<p style='color: #ff0'>O produto deve ter um valor de utilidade!</p>";
+        document.getElementById("msgValorUtil").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter um valor de utilidade!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -663,21 +663,21 @@ async function atualizaProduto() {
 
     let produtoOption = produtoSelect.options[produtoSelect.selectedIndex].value;
     if (!produtoOption) {
-        document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #ff0'>Selecione um Produto para Alterar!</p>";
+        document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione um Produto para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let nomeProduto = document.getElementById('nomeProduto').value;
     if (!nomeProduto) {
-        document.getElementById("msgSemNome").innerHTML = "<p style='color: #ff0'>Por favor, informe um nome para cadastrar!</p>";
+        document.getElementById("msgSemNome").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, informe um nome para cadastrar!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let descricaoProduto = document.getElementById('descricaoProduto').value;
     if (!descricaoProduto) {
-        document.getElementById("msgSemDesc").innerHTML = "<p style='color: #ff0'>O produto deve ter uma descrição!</p>";
+        document.getElementById("msgSemDesc").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma descrição!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -695,7 +695,7 @@ async function atualizaProduto() {
     const categoriaNome = categoriaProduto.options[categoriaProduto.selectedIndex].text;
     let categoriaId = categoriaProduto.options[categoriaProduto.selectedIndex].value;
     if (!categoriaId) {
-        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #ff0'>O produto deve ter uma categoria!</p>";
+        document.getElementById("msgSemCategorias").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma categoria!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -707,35 +707,35 @@ async function atualizaProduto() {
 
     let alturaProduto = Math.trunc(document.getElementById('alturaProduto').value);
     if (!alturaProduto) {
-        document.getElementById("msgSemAltura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma altura!</p>";
+        document.getElementById("msgSemAltura").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma altura!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let larguraProduto = Math.trunc(document.getElementById('larguraProduto').value);
     if (!larguraProduto) {
-        document.getElementById("msgSemLargura").innerHTML = "<p style='color: #ff0'>O produto deve ter uma largura!</p>";
+        document.getElementById("msgSemLargura").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter uma largura!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let minProdutos = Math.trunc(document.getElementById('minimoProdutos').value);
     if (!minProdutos) {
-        document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número mínimo de frentes!</p>";
+        document.getElementById("msgMinProdutos").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, defina o número mínimo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let maxProdutos = Math.trunc(document.getElementById('maximoProdutos').value);
     if (!maxProdutos) {
-        document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #ff0'>Por favor, defina o número máximo de frentes!</p>";
+        document.getElementById("msgMaxProdutos").innerHTML = "<p style='color: #f33; font-weight: bold'>Por favor, defina o número máximo de frentes!</p>";
         scrollTo(0, 0);
         return;
     }
 
     let valorUtil = Math.trunc(document.getElementById('valorUtilidade').value);
     if (!valorUtil) {
-        document.getElementById("msgValorUtil").innerHTML = "<p style='color: #ff0'>O produto deve ter um valor de utilidade!</p>";
+        document.getElementById("msgValorUtil").innerHTML = "<p style='color: #f33; font-weight: bold'>O produto deve ter um valor de utilidade!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -773,7 +773,7 @@ async function atualizaProduto() {
 async function removeProduto() {
     let produtoOption = produtoSelect.options[produtoSelect.selectedIndex].value;
     if (!produtoOption) {
-        document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #ff0'>Selecione um Produto se quiser Remover!</p>";
+        document.getElementById("msgSemProdutos").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione um Produto se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -1021,7 +1021,7 @@ async function listarGondulas() {
 async function atualizaGondula() {
     let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
     if (!gondulaOption) {
-        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f55'>Selecione uma Gôndula para Alterar!</p>";
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione uma Gôndula para Alterar!</p>";
         scrollTo(0, 0);
         return;
     }
@@ -1083,7 +1083,7 @@ async function atualizaGondula() {
 async function removeGondula() {
     let gondulaOption = gondulaSelect.options[gondulaSelect.selectedIndex].value;
     if (!gondulaOption) {
-        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f55'>Selecione uma Gôndula se quiser Remover!</p>";
+        document.getElementById("msgSemGondulas").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione uma Gôndula se quiser Remover!</p>";
         scrollTo(0, 0);
         return;
     }

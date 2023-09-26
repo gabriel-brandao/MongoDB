@@ -196,7 +196,7 @@ routes.post("/gerarPlanograma", async (req, res) => {
         h = [${h.join(",")}];
         w = [${w.join(",")}];
         d = [${d.join(",")}];
-        // dMin = [${dMin.join(",")}]; // descomentar se necessario 
+        dMin = [${dMin.join(",")}]; // descomentar se necessario 
         
         v = [${v.join(", ")}];
         
@@ -234,13 +234,30 @@ routes.post("/gerarPlanograma", async (req, res) => {
         });
 
         child.on('close', (code) => {
-            isProcessingPlan = false;
-            res.send({ success: true });
             if (code !== 0) {
                 console.log(`O processo filho retornou o código ${code}`);
             } else {
+                fs.readFile( dirPath + '/modelRun.txt', 'utf8', (err, data) => {
+                    if (err) {
+                        return res.status(500).json({ error: "Erro ao ler o arquivo." });
+                    }
+                
+                    // Processar os dados e converter em objeto
+                    let structuredData = PlanogramaMiddleware.processData(data);
+
+                    structuredData.usuario = req.session.usuario;
+                    structuredData.gondula = gondula.nome;
+                    structuredData._id = '';
+
+                    console.log(structuredData);
+                
+                    // Salvar no BD
+                    PlanogramaController.cadastra(structuredData);
+                });
                 console.log('O processo filho foi concluído com sucesso');
             }
+            isProcessingPlan = false;
+            res.send({ success: true });
         });
 
         console.log('O processamento do plano começou.');
