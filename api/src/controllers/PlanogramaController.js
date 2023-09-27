@@ -3,11 +3,18 @@ const { v4: uuid } = require("uuid")
 const Planograma = require("../models/Planograma");
 
 module.exports = {
+    
     async index(request, response) {
         try {
-            const planogramas = await Planograma.find();
 
-            return response.status(200).json({ planogramas });
+            //(await) - aguarda a resposta
+            const planogramas = await Planograma.find().sort({ nome: 1 });
+            const planogramasCount = await Planograma.find().count();
+            //retorna para o cliente a requisição feita
+            if (planogramasCount)
+                return response.status(200).json({ found: true, planogramas });
+            else
+                return response.json({ found: false, msg: "<p style='color: #f00'>Não foi encontrado nenhum planograma</p>" });
         }
         catch (err) {
             response.status(500).json({ error: err.message });

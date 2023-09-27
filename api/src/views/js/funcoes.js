@@ -1230,3 +1230,65 @@ function checkPlanogramaStatus() {
     });
 }
 
+async function listarPlanogramas() {
+    const planograma = await axios.get("/planograma");
+    const resposta = planograma.data.planogramas;
+
+    if (planograma.data.found) {
+        document.getElementById("msgSemPlanogramas").innerHTML = "";
+
+        let opcoes = '<option value="">--Selecione um Planograma--</option>';
+        for (let i = 0; i < resposta.length; i++) {
+            opcoes += '<option value="' + resposta[i]["_id"] + '">' + resposta[i]["gondula"] + ' - ' + resposta[i]["usuario"] + '</option>';
+        }
+        if (selectPlanograma) {
+            selectPlanograma.innerHTML = opcoes;
+        }
+    } else {
+        // console.log(planograma.data.msg)
+        document.getElementById("msgSemPlanogramas").innerHTML = planograma.data.msg;
+    }
+}
+
+const selectPlanograma = document.getElementById("selectPlanograma");
+if (selectPlanograma) {
+    listarPlanogramas();
+    selectPlanograma.addEventListener("change", async () => {
+        let planogramaOption = selectPlanograma.options[selectPlanograma.selectedIndex].value;
+        if (!planogramaOption) {
+            document.querySelector('#planogramContainer') = "";
+            return;
+        }
+        const obterPlanograma = await axios.get("/planograma/" + planogramaOption);
+        console.log(obterPlanograma);
+        renderizaPlanograma(obterPlanograma.data.planograma);
+    });
+}
+
+function renderizaPlanograma(data) {
+    const container = document.querySelector('#planogramContainer');
+
+    data.modulos.forEach(modulo => {
+        const moduleDiv = document.createElement('div');
+        moduleDiv.classList.add('module');
+        moduleDiv.style.width = modulo.largura + 'px';
+
+        modulo.niveis.forEach(nivel => {
+            const levelDiv = document.createElement('div');
+            levelDiv.classList.add('level');
+            levelDiv.style.height = nivel.altura + 'px';
+
+            nivel.itens.forEach((item, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+                itemDiv.textContent = `Item: ${item}, Quantidade: ${nivel.quantidade[idx]}`;
+
+                levelDiv.appendChild(itemDiv);
+            });
+
+            moduleDiv.appendChild(levelDiv);
+        });
+
+        container.appendChild(moduleDiv);
+    });
+}

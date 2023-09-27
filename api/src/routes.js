@@ -122,6 +122,7 @@ routes.delete("/gondula/:id", GondulaMiddleware.validarId, GondulaController.exc
 // para planograma
 routes.get("/planograma", PlanogramaController.index);
 routes.post("/planograma", PlanogramaController.cadastra);
+routes.get("/planograma/:id", PlanogramaMiddleware.obterPlanograma);
 routes.delete("/planograma/:id", PlanogramaMiddleware.validarId, PlanogramaController.exclui);
 
 routes.post("/shell", () => {
@@ -248,9 +249,7 @@ routes.post("/gerarPlanograma", async (req, res) => {
                     structuredData.usuario = req.session.usuario;
                     structuredData.gondula = gondula.nome;
                     structuredData._id = '';
-
-                    console.log(structuredData);
-                
+                                    
                     // Salvar no BD
                     PlanogramaController.cadastra(structuredData);
                 });

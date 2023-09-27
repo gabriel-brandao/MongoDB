@@ -67,5 +67,24 @@ module.exports = {
         }
     
         return result;
+    },
+
+    async obterPlanograma(request, response) {
+        const { id } = request.params;
+
+        if (!isUuid(id)) {
+            return response.status(400).json({ error: "ID inválido!" });
+        }
+
+        try {
+            const planograma = await Planograma.findById(id);
+            if (!planograma) {
+                return response.status(404).json({ error: "Planograma não encontrado." });
+            } else {
+                return response.status(200).json({ planograma: planograma });
+            }
+        } catch (err) {
+            return response.status(500).json({ error: err.message });
+        }
     }
 }
