@@ -10,7 +10,7 @@ Ir = [{1,2,3,4}];//indice dos itens de cada categoria, vetor de conjuntos
 h = [260,260,260,260];//altura de cada item, vetor com todos os itens
 w = [80,80,80,80];//largura de cada item, vetor com todos os itens
 d = [35,35,35,49];//número de frentes máximo
-dMin = [18,18,18,25];//número de frentes mínimo
+// dMin = [18,18,18,25];//número de frentes mínimo
 
 v=[[11,11,11,22,22,22,13], //valor por nível. Ideia: multiplicar o valor no banco
 [11,11,11,22,22,22,13],    //pela porcentagem de cada nível 

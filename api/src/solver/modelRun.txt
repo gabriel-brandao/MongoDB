@@ -1,143 +1,173 @@
-no_modulos 3
+no_modulos 5
 
 modulo 1
 categoria 1
-largura 560
-no_niveis 7
+largura 50
+no_niveis 5
 
 nivel 1
-altura 290
-tipos_itens 2
-itens 2 1 
-quantidade 5 2 
+altura 5
+tipos_itens 1
+itens 5 
+quantidade 5 
 
 nivel 2
-altura 260
-tipos_itens 2
-itens 2 1 
-quantidade 5 2 
+altura 15
+tipos_itens 1
+itens 1 
+quantidade 10 
 
 nivel 3
-altura 260
-tipos_itens 2
-itens 2 1 
-quantidade 5 2 
+altura 20
+tipos_itens 1
+itens 0 
+quantidade 5 
 
 nivel 4
-altura 260
-tipos_itens 2
-itens 2 1 
-quantidade 5 2 
+altura 10
+tipos_itens 1
+itens 4 
+quantidade 3 
 
 nivel 5
-altura 260
+altura 10
 tipos_itens 2
-itens 2 1 
-quantidade 5 2 
-
-nivel 6
-altura 260
-tipos_itens 2
-itens 2 1 
-quantidade 5 2 
-
-nivel 7
-altura 260
-tipos_itens 2
-itens 2 1 
-quantidade 5 2 
+itens 2 3 
+quantidade 1 3 
 
 modulo 2
 categoria 1
-largura 640
-no_niveis 7
+largura 30
+no_niveis 5
 
 nivel 1
-altura 290
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
+altura 5
+tipos_itens 1
+itens 5 
+quantidade 3 
 
 nivel 2
-altura 260
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
+altura 15
+tipos_itens 1
+itens 1 
+quantidade 6 
 
 nivel 3
-altura 260
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
+altura 20
+tipos_itens 1
+itens 0 
+quantidade 3 
 
 nivel 4
-altura 260
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
+altura 10
+tipos_itens 1
+itens 4 
+quantidade 2 
 
 nivel 5
-altura 260
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
-
-nivel 6
-altura 260
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
-
-nivel 7
-altura 260
-tipos_itens 2
-itens 1 0 
-quantidade 3 5 
+altura 10
+tipos_itens 1
+itens 3 
+quantidade 5 
 
 modulo 3
 categoria 1
-largura 560
-no_niveis 7
+largura 30
+no_niveis 5
 
 nivel 1
-altura 290
-tipos_itens 1
-itens 3 
-quantidade 7 
+altura 5
+tipos_itens 0
 
 nivel 2
-altura 260
-tipos_itens 1
-itens 3 
-quantidade 7 
+altura 15
+tipos_itens 0
 
 nivel 3
-altura 260
+altura 20
+tipos_itens 1
+itens 0 
+quantidade 3 
+
+nivel 4
+altura 10
+tipos_itens 1
+itens 4 
+quantidade 2 
+
+nivel 5
+altura 10
 tipos_itens 1
 itens 3 
+quantidade 5 
+
+modulo 4
+categoria 2
+largura 50
+no_niveis 5
+
+nivel 1
+altura 5
+tipos_itens 1
+itens 8 
+quantidade 3 
+
+nivel 2
+altura 15
+tipos_itens 1
+itens 10 
+quantidade 5 
+
+nivel 3
+altura 20
+tipos_itens 1
+itens 9 
 quantidade 7 
 
 nivel 4
-altura 260
+altura 10
 tipos_itens 1
-itens 3 
-quantidade 7 
+itens 7 
+quantidade 5 
 
 nivel 5
-altura 260
-tipos_itens 1
-itens 3 
-quantidade 7 
+altura 10
+tipos_itens 2
+itens 6 7 
+quantidade 1 3 
 
-nivel 6
-altura 260
-tipos_itens 1
-itens 3 
-quantidade 7 
+modulo 5
+categoria 2
+largura 40
+no_niveis 5
 
-nivel 7
-altura 260
+nivel 1
+altura 5
 tipos_itens 1
-itens 3 
-quantidade 7 
+itens 8 
+quantidade 2 
+
+nivel 2
+altura 15
+tipos_itens 1
+itens 10 
+quantidade 5 
+
+nivel 3
+altura 20
+tipos_itens 1
+itens 9 
+quantidade 6 
+
+nivel 4
+altura 10
+tipos_itens 1
+itens 7 
+quantidade 4 
+
+nivel 5
+altura 10
+tipos_itens 1
+itens 7 
+quantidade 4 
 

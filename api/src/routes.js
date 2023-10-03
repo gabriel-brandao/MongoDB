@@ -125,9 +125,9 @@ routes.post("/planograma", PlanogramaController.cadastra);
 routes.get("/planograma/:id", PlanogramaMiddleware.obterPlanograma);
 routes.delete("/planograma/:id", PlanogramaMiddleware.validarId, PlanogramaController.exclui);
 
-routes.post("/shell", () => {
-    sh.echo("SUCESSO!!! (mensagem no console do backend/terminal)");
-});
+// routes.post("/shell", () => {
+//     sh.echo("SUCESSO!!! (mensagem no console do backend/terminal)");
+// });
 
 let isProcessingPlan = false;
 
@@ -222,7 +222,7 @@ routes.post("/gerarPlanograma", async (req, res) => {
         // sh.exec('oplrun modeloMercado3.mod supermecOleos.dat');
         // sh.cd('../../');
 
-        const child = spawn('oplrun', ['modeloMercado3.mod', 'supermecOleos.dat'], {
+        const child = spawn('oplrun', ['ModeloNovoArquivo.mod', 'supermec2.dat'], {
             cwd: path.join(__dirname, 'solver'), // define o diretório de trabalho
         });
 

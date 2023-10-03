@@ -215,3 +215,48 @@ body {
 .container {
     flex: 1;
 }
+
+#planogramContainer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 10px;
+    background-color: transparent;;
+}
+
+.module {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    min-width: 250px;
+}
+
+.level {
+    display: flex;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid #ccc;
+    /* gap: 10px; */
+}
+
+.item {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    flex: 1 0 auto;
+    /* margin: 0 5px; */
+    box-sizing: border-box;
+}
+
+.item:hover {
+    filter: brightness(90%);
+}

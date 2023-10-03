@@ -1256,7 +1256,7 @@ if (selectPlanograma) {
     selectPlanograma.addEventListener("change", async () => {
         let planogramaOption = selectPlanograma.options[selectPlanograma.selectedIndex].value;
         if (!planogramaOption) {
-            document.querySelector('#planogramContainer') = "";
+            location.reload();
             return;
         }
         const obterPlanograma = await axios.get("/planograma/" + planogramaOption);
@@ -1268,22 +1268,36 @@ if (selectPlanograma) {
 function renderizaPlanograma(data) {
     const container = document.querySelector('#planogramContainer');
 
+    // Limpa o conteúdo anterior do container
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    const itemColorMapping = {};
+
     data.modulos.forEach(modulo => {
         const moduleDiv = document.createElement('div');
         moduleDiv.classList.add('module');
+
         moduleDiv.style.width = modulo.largura + 'px';
 
         modulo.niveis.forEach(nivel => {
             const levelDiv = document.createElement('div');
             levelDiv.classList.add('level');
-            levelDiv.style.height = nivel.altura + 'px';
 
             nivel.itens.forEach((item, idx) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.classList.add('item');
-                itemDiv.textContent = `Item: ${item}, Quantidade: ${nivel.quantidade[idx]}`;
+                if (!itemColorMapping[item]) {
+                    itemColorMapping[item] = generateRandomColor();
+                }
+                
+                for (let i = 0; i < nivel.quantidade[idx]; i++) {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('item');
+                    itemDiv.textContent = `${item}`;
+                    itemDiv.style.backgroundColor = itemColorMapping[item];
 
-                levelDiv.appendChild(itemDiv);
+                    levelDiv.appendChild(itemDiv);
+                }
             });
 
             moduleDiv.appendChild(levelDiv);
@@ -1291,4 +1305,9 @@ function renderizaPlanograma(data) {
 
         container.appendChild(moduleDiv);
     });
+}
+
+function generateRandomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 60%, 70%)`;
 }
