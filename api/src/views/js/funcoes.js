@@ -1278,27 +1278,34 @@ function renderizaPlanograma(data) {
     }
 
     const itemColorMapping = {};
-
     data.modulos.forEach(modulo => {
         const moduleDiv = document.createElement('div');
         moduleDiv.classList.add('module');
 
-        moduleDiv.style.width = modulo.largura + 'px';
+        moduleDiv.style.width = modulo.largura*2.7 + 'px';
 
         modulo.niveis.forEach(nivel => {
             const levelDiv = document.createElement('div');
             levelDiv.classList.add('level');
 
-            nivel.itens.forEach((item, idx) => {
+            levelDiv.style.height = nivel.altura*2.7 + 'px';
+
+            nivel.itens.forEach(async (item, idx) => {
                 if (!itemColorMapping[item]) {
                     itemColorMapping[item] = generateRandomColor();
                 }
+                const produtoID = data.produtos[item];
+                const produtoObtido = await axios.get("/produto/" + produtoID);
+                const produto = produtoObtido.data.produto;
                 
                 for (let i = 0; i < nivel.quantidade[idx]; i++) {
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('item');
                     itemDiv.textContent = `${item}`;
                     itemDiv.style.backgroundColor = itemColorMapping[item];
+
+                    itemDiv.style.height = produto.altura*2.7-3 + 'px';
+                    itemDiv.style.width = produto.largura*2.7 + 'px';
 
                     levelDiv.appendChild(itemDiv);
                 }

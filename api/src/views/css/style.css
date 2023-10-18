@@ -232,29 +232,30 @@ body {
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid #ddd;
+    border: 3px solid rgb(128, 128, 128);
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin: 5px;
-    min-width: 250px;
+    /* min-width: 250px; */
 }
 
 .level {
     display: flex;
     flex-wrap: nowrap;
+    border: 3px solid rgb(128, 128, 128);
     border-bottom: 1px solid #ccc;
+    align-items: flex-end;
     /* gap: 10px; */
 }
 
 .item {
-    padding: 5px;
-    border: 1px solid #ccc;
+    /* padding: 5px; */
+    border: 1px solid #000;
     border-radius: 5px;
     text-align: center;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
-    flex: 1 0 auto;
-    /* margin: 0 5px; */
-    box-sizing: border-box;
+    /* flex: 1 0 auto; */
+    /* box-sizing: border-box; */
 }
 
 .item:hover {
