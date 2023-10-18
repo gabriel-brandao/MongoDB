@@ -156,9 +156,10 @@ routes.post("/gerarPlanograma", async (req, res) => {
         let w = [];
         let d = [];
         let dMin = [];
-        let v = []; 
-        let l = []; 
+        let v = [];
+        let l = [];
         let indiceProdutoAtual = 1;
+        let mapProdutos = [];
 
         for (let categoria of categorias) {
             Wmin.push(categoria.larguraMinima);
@@ -170,7 +171,8 @@ routes.post("/gerarPlanograma", async (req, res) => {
 
             for (let produto of produtos) {
                 indicesCategoria.push(indiceProdutoAtual);
-                
+                mapProdutos.push(produto._id);
+
                 h.push(produto.altura);
                 w.push(produto.largura);
                 d.push(produto.maximoProdutos);
@@ -179,7 +181,7 @@ routes.post("/gerarPlanograma", async (req, res) => {
 
                 let vProduto = [];
                 for (let i = 0; i < gondula.quantidadeDeNiveis; i++) {
-                    vProduto.push(produto.valorUtilidade * categoria.valorPorArea[gondula.regioes[i]]);
+                    vProduto.push(Math.trunc(produto.valorUtilidade * categoria.valorPorArea[gondula.regioes[i]] / 10));
                 }
                 vCategoria.push(vProduto);
 
@@ -197,7 +199,7 @@ routes.post("/gerarPlanograma", async (req, res) => {
         h = [${h.join(",")}];
         w = [${w.join(",")}];
         d = [${d.join(",")}];
-        dMin = [${dMin.join(",")}]; // descomentar se necessario 
+        // dMin = [${dMin.join(",")}]; // descomentar se necessario 
         
         v = [${v.join(", ")}];
         
@@ -205,12 +207,12 @@ routes.post("/gerarPlanograma", async (req, res) => {
         l = [${l.join(",")}];
         `;
 
-      
+
         const dirPath = path.join(__dirname, 'solver');
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath);
         }
-        
+
         const filePath = path.join(__dirname, 'solver', 'dados.dat');
         fs.writeFileSync(filePath, dadosDat);
 
@@ -222,7 +224,7 @@ routes.post("/gerarPlanograma", async (req, res) => {
         // sh.exec('oplrun modeloMercado3.mod supermecOleos.dat');
         // sh.cd('../../');
 
-        const child = spawn('oplrun', ['ModeloNovoArquivo.mod', 'supermec2.dat'], {
+        const child = spawn('oplrun', ['ModeloNovoArquivo.mod', 'dados.dat'], {
             cwd: path.join(__dirname, 'solver'), // define o diretório de trabalho
         });
 
@@ -238,18 +240,29 @@ routes.post("/gerarPlanograma", async (req, res) => {
             if (code !== 0) {
                 console.log(`O processo filho retornou o código ${code}`);
             } else {
-                fs.readFile( dirPath + '/modelRun.txt', 'utf8', (err, data) => {
+                fs.readFile(dirPath + '/modelRun.txt', 'utf8', (err, data) => {
                     if (err) {
                         return res.status(500).json({ error: "Erro ao ler o arquivo." });
                     }
-                
+
+                    const dataAtual = new Date();
+                    const dia = String(dataAtual.getDate()).padStart(2, '0'); 
+                    const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+                    const ano = dataAtual.getFullYear();
+                    const horas = String(dataAtual.getHours()).padStart(2, '0'); 
+                    const minutos = String(dataAtual.getMinutes()).padStart(2, '0'); 
+
+                    const dataHora = `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+
                     // Processar os dados e converter em objeto
                     let structuredData = PlanogramaMiddleware.processData(data);
 
                     structuredData.usuario = req.session.usuario;
                     structuredData.gondula = gondula.nome;
+                    structuredData.data_hora = dataHora;
+                    structuredData.produtos = mapProdutos;
                     structuredData._id = '';
-                                    
+
                     // Salvar no BD
                     PlanogramaController.cadastra(structuredData);
                 });

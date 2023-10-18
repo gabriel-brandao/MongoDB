@@ -1099,7 +1099,9 @@ function showTabelaNiveis(num, regioesNiveisIniciais = []) {
     regioesNiveis = [...regioesNiveisIniciais];
     
     if (regioesNiveis.length === 0) {
-        regioesNiveis = new Array(num).fill(0);
+        for (let i = 0; i < num; i++) {
+            regioesNiveis.push(0);
+        }
     }
         
     const tabela = document.getElementById('tabelaNiveis');
@@ -1239,7 +1241,7 @@ async function listarPlanogramas() {
 
         let opcoes = '<option value="">--Selecione um Planograma--</option>';
         for (let i = 0; i < resposta.length; i++) {
-            opcoes += '<option value="' + resposta[i]["_id"] + '">' + resposta[i]["gondula"] + ' - ' + resposta[i]["usuario"] + '</option>';
+            opcoes += '<option value="' + resposta[i]["_id"] + '">' + resposta[i]["gondula"] + ' - ' + resposta[i]["usuario"] + ' - ' + resposta[i]["data_hora"] + '</option>';
         }
         if (selectPlanograma) {
             selectPlanograma.innerHTML = opcoes;
@@ -1254,14 +1256,16 @@ const selectPlanograma = document.getElementById("selectPlanograma");
 if (selectPlanograma) {
     listarPlanogramas();
     selectPlanograma.addEventListener("change", async () => {
+        document.getElementById("msgSemPlanogramas").innerHTML = "";
         let planogramaOption = selectPlanograma.options[selectPlanograma.selectedIndex].value;
         if (!planogramaOption) {
             location.reload();
             return;
         }
         const obterPlanograma = await axios.get("/planograma/" + planogramaOption);
-        console.log(obterPlanograma);
+        // console.log(obterPlanograma);
         renderizaPlanograma(obterPlanograma.data.planograma);
+        legendaPlanograma(obterPlanograma.data.planograma);
     });
 }
 
@@ -1307,7 +1311,53 @@ function renderizaPlanograma(data) {
     });
 }
 
+function legendaPlanograma(data) {
+    const legenda = document.querySelector('#planogramaLegendas');
+
+    // Limpa o conteúdo anterior da legenda
+    while (legenda.firstChild) {
+        legenda.removeChild(legenda.firstChild);
+    }
+    legenda.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+
+    const para = document.createElement('p');
+    para.innerText = "Legenda: ";
+    para.style.color = '#ffd900';
+    para.style.fontWeight = 'bold';
+    legenda.appendChild(para);
+
+    const ul = document.createElement('ul');
+    legenda.appendChild(ul);
+
+    let indiceProd = 0;
+    data.produtos.forEach(async produtoID => {
+        const produtoData = await axios.get("/produto/" + produtoID);
+        produto = produtoData.data.produto;
+        const produtoItem = document.createElement('li');
+        produtoItem.setAttribute('class','produtoItem');
+        produtoItem.innerHTML = indiceProd.toString() + " : " + produto.nome;
+        indiceProd++;
+        ul.appendChild(produtoItem);
+    });
+    '<p style="color: #ffd900; padding: 5px; font-weight: bold;">Legenda:</p>';
+}
+
 function generateRandomColor() {
     const hue = Math.floor(Math.random() * 360);
     return `hsl(${hue}, 60%, 70%)`;
+}
+
+async function removePlanograma() {
+    let planogramaOption = selectPlanograma.options[selectPlanograma.selectedIndex].value;
+    if (!planogramaOption) {
+        document.getElementById("msgSemPlanogramas").innerHTML = "<p style='color: #f33; font-weight: bold'>Selecione um Planograma se quiser Remover!</p>";
+        scrollTo(0, 0);
+        return;
+    }
+
+    if (confirm("Você deseja realmente excluir este Planograma?")) {
+        const remover = await axios.delete("/planograma/" + planogramaOption);
+        alert(remover.data.message);
+        location.reload();
+    }
 }

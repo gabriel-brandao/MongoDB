@@ -50,14 +50,21 @@
         <form id="formulario">
             <div class="form-group">
                 <label for="selectPlanograma" class="text-warning">Planograma:</label>
-                <select class="form-control" id="selectPlanograma" name="planogramas" required>
-                </select>
+                <div class="d-flex" style="height: 50px;">
+                    <div class="col-sm-5">
+                        <select class="form-control" id="selectPlanograma" name="planogramas" required>
+                        </select>
+                    </div>
+                    <div style="padding-left: 30px;">
+                        <button type="button" onclick="removePlanograma()" class="btn btn-remover btn-lg "><i
+                            class="fas fa-trash-alt"></i> Remover</button>
+                    </div>
+                </div>
                 <span id="msgSemPlanogramas"></span>
             </div>
 
-            <div id="planogramContainer">
-
-            </div>
+            <div style="margin-top: 0px; padding: 5px;" id="planogramContainer"></div>
+            <div style="margin: 5px; padding: 5px;" class="col-sm-5" id="planogramaLegendas"></div>
         </form>
     </div>
 

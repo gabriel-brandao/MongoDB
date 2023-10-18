@@ -8,7 +8,7 @@ module.exports = {
         try {
 
             //(await) - aguarda a resposta
-            const planogramas = await Planograma.find().sort({ nome: 1 });
+            const planogramas = await Planograma.find().sort({ data_hora: -1 });
             const planogramasCount = await Planograma.find().count();
             //retorna para o cliente a requisição feita
             if (planogramasCount)

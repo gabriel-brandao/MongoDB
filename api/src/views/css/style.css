@@ -260,3 +260,7 @@ body {
 .item:hover {
     filter: brightness(90%);
 }
+
+.produtoItem {
+    color: #ffc107;
+}

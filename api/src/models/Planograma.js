@@ -13,6 +13,14 @@ const planogramaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    data_hora: {
+        type: String,
+        required: true
+    },
+    produtos: {
+        type: Array, // id
+        default: []
+    },
     no_modulos: Number,
     modulos: [{
         categoria: Number,
