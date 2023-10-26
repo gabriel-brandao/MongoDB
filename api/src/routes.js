@@ -16,7 +16,7 @@ const { spawn } = require('child_process');
 const routes = express.Router();
 
 //para receber dados do formulario html no request.body
-routes.use(express.urlencoded());
+routes.use(express.urlencoded({ extended: true }));
 
 const ProdutoController = require("./controllers/ProdutoController");
 const ProdutoMiddleware = require("./middlewares/ProdutoMiddleware");

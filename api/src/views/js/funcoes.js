@@ -1269,7 +1269,7 @@ if (selectPlanograma) {
     });
 }
 
-function renderizaPlanograma(data) {
+async function renderizaPlanograma(data) {
     const container = document.querySelector('#planogramContainer');
 
     // Limpa o conteúdo anterior do container
@@ -1278,47 +1278,50 @@ function renderizaPlanograma(data) {
     }
 
     const itemColorMapping = {};
-    data.modulos.forEach(modulo => {
+
+    for (const modulo of data.modulos) {
         const moduleDiv = document.createElement('div');
         moduleDiv.classList.add('module');
+        moduleDiv.style.width = modulo.largura * 2.7 + 'px';
 
-        moduleDiv.style.width = modulo.largura*2.7 + 'px';
-
-        modulo.niveis.forEach(nivel => {
+        for (const nivel of modulo.niveis) {
             const levelDiv = document.createElement('div');
             levelDiv.classList.add('level');
+            levelDiv.style.height = nivel.altura * 2.7 + 'px';
 
-            levelDiv.style.height = nivel.altura*2.7 + 'px';
-
-            nivel.itens.forEach(async (item, idx) => {
+            for (let idx = 0; idx < nivel.itens.length; idx++) {
+                const item = nivel.itens[idx];
                 if (!itemColorMapping[item]) {
                     itemColorMapping[item] = generateRandomColor();
                 }
                 const produtoID = data.produtos[item];
-                const produtoObtido = await axios.get("/produto/" + produtoID);
-                const produto = produtoObtido.data.produto;
-                
-                for (let i = 0; i < nivel.quantidade[idx]; i++) {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.classList.add('item');
-                    itemDiv.textContent = `${item}`;
-                    itemDiv.style.backgroundColor = itemColorMapping[item];
 
-                    itemDiv.style.height = produto.altura*2.7-3 + 'px';
-                    itemDiv.style.width = produto.largura*2.7 + 'px';
+                try {
+                    const produtoObtido = await axios.get("/produto/" + produtoID);
+                    const produto = produtoObtido.data.produto;
 
-                    levelDiv.appendChild(itemDiv);
+                    for (let i = 0; i < nivel.quantidade[idx]; i++) {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.classList.add('item');
+                        itemDiv.textContent = `${item}`;
+                        itemDiv.style.backgroundColor = itemColorMapping[item];
+                        itemDiv.style.height = produto.altura * 2.7 - 3 + 'px';
+                        itemDiv.style.width = produto.largura * 2.7 + 'px';
+                        levelDiv.appendChild(itemDiv);
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar dados do produto: " + error);
                 }
-            });
+            }
 
             moduleDiv.appendChild(levelDiv);
-        });
+        }
 
         container.appendChild(moduleDiv);
-    });
+    }
 }
 
-function legendaPlanograma(data) {
+async function legendaPlanograma(data) {
     const legenda = document.querySelector('#planogramaLegendas');
 
     // Limpa o conteúdo anterior da legenda
@@ -1334,19 +1337,23 @@ function legendaPlanograma(data) {
     legenda.appendChild(para);
 
     const ul = document.createElement('ul');
+    
+    for (let indiceProd = 0; indiceProd < data.produtos.length; indiceProd++) {
+        const produtoID = data.produtos[indiceProd];
+        try {
+            const produtoData = await axios.get("/produto/" + produtoID);
+            const produto = produtoData.data.produto;
+            const produtoItem = document.createElement('li');
+            produtoItem.setAttribute('class','produtoItem');
+            produtoItem.innerHTML = indiceProd.toString() + " : " + produto.nome;
+            ul.appendChild(produtoItem);
+        } catch (error) {
+            console.error("Erro ao buscar dados do produto: " + error);
+        }
+    }
+    
     legenda.appendChild(ul);
 
-    let indiceProd = 0;
-    data.produtos.forEach(async produtoID => {
-        const produtoData = await axios.get("/produto/" + produtoID);
-        produto = produtoData.data.produto;
-        const produtoItem = document.createElement('li');
-        produtoItem.setAttribute('class','produtoItem');
-        produtoItem.innerHTML = indiceProd.toString() + " : " + produto.nome;
-        indiceProd++;
-        ul.appendChild(produtoItem);
-    });
-    '<p style="color: #ffd900; padding: 5px; font-weight: bold;">Legenda:</p>';
 }
 
 function generateRandomColor() {
