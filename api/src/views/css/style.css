@@ -1,3 +1,10 @@
+@media (max-width: 768px) {
+    /* Estilos para telas menores (responsividade) */
+    .seu-elemento {
+        color: blue; /*Exemplo*/
+    }
+}
+
 #footer {
     width: 100%;
 }
@@ -24,7 +31,7 @@
     padding-top: 100px;
 }
 
-.corpo-Login {
+/* .corpo-Login {
     background-image: url(/assets/background-prateleira-mono.svg);
     background-repeat: no-repeat;
     background-position: 0% -4%;
@@ -32,6 +39,17 @@
     height: 100vh;
     width: 100vw;
     padding: 200px;
+} */
+
+.corpo-Login {
+    background-image: url(/assets/background-prateleira-mono.svg);
+    background-repeat: no-repeat;
+    background-position: 0% -4%;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px; /* Reduza o preenchimento para dispositivos móveis */
+    padding-top: 200px;
 }
 
 #content-main{
@@ -68,6 +86,7 @@
 
 .nav-link-yellow {
     color: #ffd900;
+    padding-right: 13px;
 }
 
 .mid-center {
@@ -214,6 +233,7 @@ body {
 
 .container {
     flex: 1;
+    /* width: 100%; */
 }
 
 #planogramContainer {

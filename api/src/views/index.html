@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="assets/Logo.svg" type="image/x-icon">
     <title>OptiGraM | Login</title>
     <!--importação do CSS-->
@@ -15,7 +15,8 @@
 
 <body class="corpo-Login">
     <header class="cabecalho fixed-top">
-        <div class="logo" style="display: flex; flex-direction: column; align-items: center;">
+        <!-- <div class="logo" style="display: flex; flex-direction: column; align-items: center;"> -->
+        <div class="logo text-center">
             <img id="logo" width="200" src="assets/Logo.svg" alt="OptiGraM">
         </div>
     </header>
@@ -43,11 +44,11 @@
 
                     <div class="checkbox mb-3">
                         <label style="color: white;">
-                            <input type="checkbox" value="lembrar de mim"> Lembrar de mim
+                            <input type="checkbox" id="rememberMe"> Lembrar de mim
                         </label>
                     </div>
 
-                    <div style="display: flex; align-content: center;">
+                    <div style="display: flex; align-content: center; padding-top: 15px;">
                         <span id="msgInvalid"></span>
                     </div>
 
@@ -83,6 +84,18 @@
 
         }
 
+        const rememberedUsername = localStorage.getItem('username');
+        const rememberedPassword = localStorage.getItem('password');
+        const lembrarInfo = localStorage.getItem('lembrar');
+
+        if (rememberedUsername && rememberedPassword) {
+            document.getElementById('inputUsername').value = rememberedUsername;
+            document.getElementById('inputPassword').value = rememberedPassword;
+        }
+        if (lembrarInfo) {
+            document.getElementById('rememberMe').checked = true;
+        }
+
         document.addEventListener('keypress', function (e) {
             if (e.which == 13) {
                 logar();
@@ -106,6 +119,21 @@
                 scrollTo(0, 0);
                 return;
             }
+
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            if (rememberMe) {
+                // Armazenar informações de login no localStorage
+                localStorage.setItem('username', inputUsername);
+                localStorage.setItem('password', inputPassword);
+                localStorage.setItem('lembrar', true);
+            } else {
+                // Limpar as informações de login do localStorage se não for lembrar
+                localStorage.removeItem('username');
+                localStorage.removeItem('password');
+                localStorage.removeItem('lembrar');
+            }
+
             const data = {
                 inputUsername: inputUsername,
                 inputPassword: inputPassword,
